@@ -1,0 +1,145 @@
+#include <iostream>
+#include <fstream>
+#include <map>
+
+using namespace std;
+#include "cppClassTemplate.inc.h"
+
+extern string outputDir;
+
+COMPILER ddl2cpp
+
+wstring tableName;
+wstring primaryKey;
+
+FieldTypes fieldMap;	// Mapping <champ, type>*
+
+RoleMap roleMap;	// Mapping des rôles (clés étrangères sans suffixe "Id)  vers les clés primaires concernées.
+					// Ex:avec une table "personne": < personne_id,nom,prenom,mere_id >, on a:
+					// #pragma db column("mere_id")
+					// const Personne& mere; 
+
+typedef FieldTypes::iterator fieldIt;
+
+void dumpClassToFile() {
+	wstring className=camelize(tableName);
+	string path=outputDir+"/"+string(className.begin(),className.end())+".hxx";
+	wofstream out(path.c_str());
+	wstring prologue=cppPrologue; //Pour ne pas modifier le template cppPrologue static, sinon, l'analyse multi-table plantera.
+	replaceAll(L"$className", className, prologue); // substituer le nom de la classe à son "tag".
+	replaceAll(L"$tableName", tableName, prologue); // le nom de la table pour le pragma db table("tableName")
+	out << prologue;		// En-tête
+	out << cppAccessors;	// Accesseurs
+	for (fieldIt it=fieldMap.begin();it!=fieldMap.end();it++) {  
+		out << L"\t\tconst " << it->second << L"& "<< it->first << L"()" 
+			<< L" const { return " <<  it->first << L"_; }" << endl;
+	}
+	wstring fields=cppFields;
+	replaceAll(L"$className", className, fields); //le constructeur privé
+	out << fields;		
+	for (fieldIt it=fieldMap.begin();it!=fieldMap.end();it++) { // Les données-membres mappées avec leur type
+		if (roleMap.find(it->first)!=roleMap.end())  { //rôle "objet" navigable trouvé
+			wstring roleColumn=it->first+L"Id";
+			if (roleColumn!=roleMap[it->first]) { //pragma seulement si odb ne peut déduire le lien
+				wstring insertedPragma=pragmaRole;
+				replaceAll(L"$roleColumn", roleColumn, insertedPragma);
+				out << insertedPragma;
+			}
+		}
+		if (it->first==primaryKey) out << pragmaID; //clé primaire maquée d'un pragma
+		out << L"\t\t" << it->second << L" "<< it->first << L"_;" << endl; 
+	}	
+	out << cppEpilogue;		// Hop, les accolades et les #endif !
+};
+
+/*--------------------------------------------------------------------------*/
+IGNORECASE
+
+CHARACTERS
+  letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzéàèçùô".
+  digit = "0123456789".
+  quote='\''.
+  cr  = '\r'.
+  lf  = '\n'.
+  tab = '\t'.
+
+TOKENS
+  identifier  = letter {letter | digit | '_'}.
+  number = digit {digit}.
+  comparator = ">=" | '>' | '<' | "<=" | '='.
+
+COMMENTS FROM "/*" TO "*/" NESTED
+COMMENTS FROM "//" TO cr lf
+
+IGNORE cr + lf + tab
+
+PRODUCTIONS
+/*------------------------------------------------------------------------*/
+ddl2cpp						
+= 
+("CREATE" "TABLE" identifier					(. tableName=t->val; primaryKey.clear(); roleMap.clear(); fieldMap.clear(); .)
+'('
+	TableItemSpec 
+	{',' TableItemSpec}
+ ')'';'											(. dumpClassToFile(); .)
+)
+.
+TableItemSpec									(. wstring fieldName; wstring typeDecl;		.)
+=   (identifier									(. fieldName=t->val;						.)		
+	TypeSpec<typeDecl>										
+	[ValueSpec<typeDecl>]
+	[CheckSpec]
+   )								(. fieldMap[fieldName]=typeDecl;							.)
+ | ("PRIMARY" "KEY" '(' identifier	(. primaryKey=t->val;										.)
+	{','identifier					(. primaryKey=L""; /* pas de PK composée*/					.)
+	}')' )						
+| ("FOREIGN" "KEY" '(' identifier	(. wstring role=t->val;										.)
+									(. role.erase(role.size()-2,2);	/* Vire "Id" du rôle navigable*/ .) 
+	')' "REFERENCES" identifier		(. fieldMap[role]=L"lazy_auto_ptr<"+camelize(t->val)+L">";	.) 
+   '(' identifier					(. roleMap[role]=t->val;									.)
+	')'
+   )											
+.
+TypeSpec<wstring &typeDecl> =							(. typeDecl=L"What_The_Fuck";		.)
+(	"BOOLEAN"											(. typeDecl=L"auto_ptr<bool>";		.)
+|	("INTEGER" | "INT")									(. typeDecl=L"auto_ptr<long>";		.)
+|	("TINYINT"											(. typeDecl=L"auto_ptr<char>";		.)
+	|"SMALLINT"											(. typeDecl=L"auto_ptr<short>";		.)
+	)							
+|	("TEXT"|"CHAR" '('number')'|"VARCHAR"'('number')')	(. typeDecl=L"auto_ptr<string>";	.)
+|	("DOUBLE"|"BIG" "DECIMAL"|
+	 "DECIMAL"'('number [','number]')'					(. typeDecl=L"auto_ptr<double>";	.)
+	)					
+|	"DATE"												(. typeDecl=L"auto_ptr<string>";	.)
+)
+.
+ValueSpec<wstring &typeDecl>
+= ("NOT" "NULL")							(. replaceAll(L"auto_ptr<",L"",typeDecl);	.)
+											(. replaceAll(L">",L"",typeDecl);			.)
+  
+ | ("DEFAULT" Value)
+ | "NULL" 
+.
+
+CheckSpec
+= "CHECK" '('
+	CheckCondition
+ ')'
+.
+CheckCondition
+=(	identifier 
+	(
+		(comparator Value) | 
+		("IN" ValueList) |
+		("IS" ["NOT"] "NULL")
+	) [("OR" | "AND") CheckCondition]
+ )	|
+ ( '(' CheckCondition ')') 
+.
+ValueList
+= '(' Value {',' Value} ')'
+.
+Value
+= ['+'| '-'] number | '\''{ANY}'\'' | "NULL"
+.
+END ddl2cpp.
