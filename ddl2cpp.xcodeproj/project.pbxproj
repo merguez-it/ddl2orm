@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B2FDFFA1504360E00B07EE0 /* test-db.sql */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = "test-db.sql"; path = "test/test-db.sql"; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
 		6B8EAEB614FEB5BF0023899E /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		6B8EAEB714FEB5BF0023899E /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
@@ -86,6 +87,7 @@
 		6BA82F081503959F00ECD299 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				6B2FDFFA1504360E00B07EE0 /* test-db.sql */,
 				6BA82F09150395BF00ECD299 /* test-table.sql */,
 			);
 			name = test;
