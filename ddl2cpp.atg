@@ -39,8 +39,11 @@ void dumpClassToFile() {
 		out << prologue;		// En-tête
 		out << cppAccessors;	// Accesseurs
 		for (fieldIt it=fieldMap.begin();it!=fieldMap.end();it++) {  
-			out << L"\t\tconst " << it->second << L"& "<< it->first << L"()" 
-				<< L" const { return " <<  it->first << L"_; }" << endl;
+			out << L"\t\tconst " << it->second << L"& "<< it->first << L"()" ;
+			if (isRole(it->first))
+				out << L" const {" << it->first << L"_.load(); " << "return " <<  it->first << L"_; }" << endl;
+			else
+				out << L" const { return " <<  it->first << L"_; }" << endl;
 		}
 		wstring fields=cppFields;
 		replaceAll(L"$className", className, fields); //le constructeur privé

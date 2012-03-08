@@ -1,0 +1,7 @@
+TODO:
+- les includes des classes foreign
+- les operateurs "out"
+- les relations n-n, et leur inverse
+- le build ddl2cpp -> classes ODB
+- les classes de test
+- les enums mappées (??? pas dns le modèle: quelle input ?)
