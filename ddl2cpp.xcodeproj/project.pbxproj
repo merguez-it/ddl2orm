@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B8EAEBA14FEB5BF0023899E /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAEB614FEB5BF0023899E /* Parser.cpp */; };
-		6B8EAEBB14FEB5BF0023899E /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAEB814FEB5BF0023899E /* Scanner.cpp */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
+		6BC62AD515089359002A562C /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD115089359002A562C /* Parser.cpp */; };
+		6BC62AD615089359002A562C /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD315089359002A562C /* Scanner.cpp */; };
 		8DD76F6A0486A84900D96B5E /* ddl2cpp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* ddl2cpp.1 */; };
 /* End PBXBuildFile section */
 
@@ -27,15 +27,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6B2FDFFA1504360E00B07EE0 /* test-db.sql */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = "test-db.sql"; path = "test/test-db.sql"; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
-		6B8EAEB614FEB5BF0023899E /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
-		6B8EAEB714FEB5BF0023899E /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
-		6B8EAEB814FEB5BF0023899E /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scanner.cpp; sourceTree = "<group>"; };
-		6B8EAEB914FEB5BF0023899E /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
 		6B8EAEC314FEBE560023899E /* ddl2cpp.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2cpp.atg; sourceTree = "<group>"; };
 		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6BA82F09150395BF00ECD299 /* test-table.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-table.sql"; path = "test/test-table.sql"; sourceTree = "<group>"; };
+		6BC62AC415089223002A562C /* test-db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-db.sql"; path = "test/test-db.sql"; sourceTree = "<group>"; };
+		6BC62AD115089359002A562C /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = cocoGenerated/Parser.cpp; sourceTree = "<group>"; };
+		6BC62AD215089359002A562C /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = cocoGenerated/Parser.h; sourceTree = "<group>"; };
+		6BC62AD315089359002A562C /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = cocoGenerated/Scanner.cpp; sourceTree = "<group>"; };
+		6BC62AD415089359002A562C /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = cocoGenerated/Scanner.h; sourceTree = "<group>"; };
 		8DD76F6C0486A84900D96B5E /* ddl2cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ddl2cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* ddl2cpp.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ddl2cpp.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,12 +66,9 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6BC62AD015089339002A562C /* cocoGenerated */,
 				6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */,
 				6B8EAECD14FED55B0023899E /* main.cpp */,
-				6B8EAEB614FEB5BF0023899E /* Parser.cpp */,
-				6B8EAEB714FEB5BF0023899E /* Parser.h */,
-				6B8EAEB814FEB5BF0023899E /* Scanner.cpp */,
-				6B8EAEB914FEB5BF0023899E /* Scanner.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -87,10 +84,21 @@
 		6BA82F081503959F00ECD299 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				6B2FDFFA1504360E00B07EE0 /* test-db.sql */,
+				6BC62AC415089223002A562C /* test-db.sql */,
 				6BA82F09150395BF00ECD299 /* test-table.sql */,
 			);
 			name = test;
+			sourceTree = "<group>";
+		};
+		6BC62AD015089339002A562C /* cocoGenerated */ = {
+			isa = PBXGroup;
+			children = (
+				6BC62AD115089359002A562C /* Parser.cpp */,
+				6BC62AD215089359002A562C /* Parser.h */,
+				6BC62AD315089359002A562C /* Scanner.cpp */,
+				6BC62AD415089359002A562C /* Scanner.h */,
+			);
+			name = cocoGenerated;
 			sourceTree = "<group>";
 		};
 		C6859E8C029090F304C91782 /* Documentation */ = {
@@ -164,7 +172,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./cocoDir/coco ./ddl2cpp.atg -frames ./cocoDir -o ./";
+			shellScript = "./cocoDir/coco ./ddl2cpp.atg -frames ./cocoDir -o ./cocoGenerated";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -173,9 +181,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B8EAEBA14FEB5BF0023899E /* Parser.cpp in Sources */,
-				6B8EAEBB14FEB5BF0023899E /* Scanner.cpp in Sources */,
 				6B8EAECE14FED55B0023899E /* main.cpp in Sources */,
+				6BC62AD515089359002A562C /* Parser.cpp in Sources */,
+				6BC62AD615089359002A562C /* Scanner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +226,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
 			};
 			name = Debug;
 		};
@@ -230,6 +239,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
 			};
 			name = Release;
 		};

@@ -2,4 +2,6 @@
 *.pbxuser
 *.perspectivev3
 build/
+cocoGenerated/
+test/*.hxx
 .DS_Store
