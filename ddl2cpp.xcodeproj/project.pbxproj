@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
+		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
 		6BC62AD515089359002A562C /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD115089359002A562C /* Parser.cpp */; };
 		6BC62AD615089359002A562C /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD315089359002A562C /* Scanner.cpp */; };
@@ -27,6 +29,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B1849B6150F395200E5C7DA /* MappedTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappedTable.h; sourceTree = "<group>"; };
+		6B1849B7150F395200E5C7DA /* MappedTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MappedTable.cpp; sourceTree = "<group>"; };
+		6B1849E6150FC72400E5C7DA /* ObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModel.h; sourceTree = "<group>"; };
+		6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModel.cpp; sourceTree = "<group>"; };
+		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
 		6B8EAEC314FEBE560023899E /* ddl2cpp.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2cpp.atg; sourceTree = "<group>"; };
 		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -66,9 +73,11 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6B184A0415108AD700E5C7DA /* headers */,
 				6BC62AD015089339002A562C /* cocoGenerated */,
-				6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */,
 				6B8EAECD14FED55B0023899E /* main.cpp */,
+				6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */,
+				6B1849B7150F395200E5C7DA /* MappedTable.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -79,6 +88,17 @@
 				8DD76F6C0486A84900D96B5E /* ddl2cpp */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6B184A0415108AD700E5C7DA /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				6B1849E6150FC72400E5C7DA /* ObjectModel.h */,
+				6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */,
+				6B1849B6150F395200E5C7DA /* MappedTable.h */,
+				6B184A201510D13B00E5C7DA /* MappingUtils.h */,
+			);
+			name = headers;
 			sourceTree = "<group>";
 		};
 		6BA82F081503959F00ECD299 /* test */ = {
@@ -136,6 +156,9 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Vidal;
+			};
 			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ddl2cpp" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -184,6 +207,8 @@
 				6B8EAECE14FED55B0023899E /* main.cpp in Sources */,
 				6BC62AD515089359002A562C /* Parser.cpp in Sources */,
 				6BC62AD615089359002A562C /* Scanner.cpp in Sources */,
+				6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */,
+				6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
