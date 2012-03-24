@@ -18,9 +18,10 @@ using namespace std;
 inline void replaceAll(const wstring& pattern, const wstring& word, wstring& target) {
 	size_t pos=0;
 	do {
-		pos=target.find(pattern);
+		pos=target.find(pattern,pos);
 		if (pos!=wstring::npos) {
 			target.replace(pos,pattern.size(),word);
+			pos=pos+word.size();
 		}
 	} while (pos!=wstring::npos);
 }

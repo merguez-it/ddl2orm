@@ -34,7 +34,7 @@ void MappedTable::generateClassRepresentation() {
 			classRepresentation+= L"\t\tconst " + it->second + L"& "+ it->first + L"()" ;
 			if (isRole(it->first))
 				classRepresentation+= L" const {" + it->first + L"_.load(); return " +  it->first + L"_; }\n";
-			else
+			else 
 				classRepresentation+= L" const { return " +  it->first + L"_; }\n";
 		}
 		wstring fields=cppFields;

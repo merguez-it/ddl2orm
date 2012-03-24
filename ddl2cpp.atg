@@ -63,7 +63,7 @@ TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
 	}')' )						
 | ("FOREIGN" "KEY" '(' identifier	(. wstring role=trimQuotes(t->val), column=trimQuotes(t->val);			.)
 									(. replaceAll(L"Id",L"",role);	/* Vire "Id" du rôle-objet navigable */ .) 
-	')' "REFERENCES" identifier		(. mt.fieldMap[role]=L"lazy_auto_ptr<"+camelize(trimQuotes(t->val))+L">";	.) 
+	')' "REFERENCES" identifier		(. mt.fieldMap[role]=camelize(trimQuotes(t->val));	.) 
    '(' identifier					(. mt.fkToPk[column]=trimQuotes(t->val);									.)
 	')'
    )											

@@ -18,11 +18,12 @@
 #include <stdlib.h>
 #include <string>
 #include <map>
-
+#include <vector>
 using namespace std;
 
-typedef map<wstring,wstring> FieldTypes;
-typedef map<wstring,wstring> RoleMap; //mapper les cles etrangères avec les clés primaires, si elles different
+typedef map<wstring,wstring> FieldTypes;	// Mapper les data fields et leur type C++, (sans mention de classe d'allocation)
+typedef map<wstring,wstring> RoleMap;		// Mapper les cles etrangères ("to-one") avec les clés primaires associées
+typedef vector<wstring> NullableMap;		// Mapper les fields nullables (les fk nullables peuvent y figurer, pas les rôles associés)
 typedef FieldTypes::iterator fieldIt;
 
 
@@ -39,11 +40,8 @@ protected:
 	wstring classRepresentation;
 	wstring primaryKey;
 	FieldTypes fieldMap;	// Mapping <champ, type>*
-	RoleMap fkToPk;			// Mapping des rôles (clés étrangères)  vers les clés primaires concernées.
-	// Ex:avec une table "personne": < personne_id,nom,prenom,mere_id >, on a:
-	// fkToPk["mere_id"] égal à "personne_id", qui génèrera:
-	//   #pragma db column("mere_id")
-	//   lazy_auto_ptr<Personne> mere; 
+	RoleMap fkToPk;			// Mapping <fk,pk>*
+	NullableMap nullables;	// Liste des fields nullables, mappés en pointeurs
 }; 
 
 #endif
