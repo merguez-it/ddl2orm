@@ -43,4 +43,10 @@ inline wstring trimQuotes(const wstring& target) { //vire la quote de debut et d
 	return result.assign(target,deb,keep);
 }
 
+inline wstring toUpper(wstring s) {
+	wstring r = s;
+	transform(r.begin(), r.end(), r.begin(), ::toupper);
+	return r;
+}
+
 #endif

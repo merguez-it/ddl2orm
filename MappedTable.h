@@ -3,10 +3,8 @@
  *  ddl2cpp
  *
  * A MappedTable maps either à Class or an Association (tables "object1_object2") 
- * - It owns any required descriptive information about the mapped table (fields, roles, keys)
- * - It generates textual representation of mapped classes.
- *   Associations are generated "as a whole" by the ObjectModel in a second pass,
- *   substituing "to-many" tags in class representations.
+ * - It owns any required descriptive information about the mapped table (fields, roles, bidirectional associations, keys)
+ * - Thus, it allows full generation of C++ representation for the mapped class.
  *
  * Created by Mathias Franck on 13/03/12.
  * Copyright 2012 Vidal. All rights reserved.
@@ -21,27 +19,47 @@
 #include <vector>
 using namespace std;
 
-typedef map<wstring,wstring> FieldTypes;	// Mapper les data fields et leur type C++, (sans mention de classe d'allocation)
-typedef map<wstring,wstring> RoleMap;		// Mapper les cles etrangères ("to-one") avec les clés primaires associées
-typedef vector<wstring> NullableMap;		// Mapper les fields nullables (les fk nullables peuvent y figurer, pas les rôles associés)
-typedef FieldTypes::iterator fieldIt;
 
+enum  MemberKind {
+	DATA, NULLABLE_DATA, TO_ONE, MANY_TO_MANY, ONE_TO_MANY
+};
+
+// Describes a member to map 
+struct MemberDesc {
+	MemberKind kind; 
+	wstring type;	//  Class (to-one, to-manies) or simple type
+	// Following fields are only used to map role-members
+	wstring fkName;  // Foreign key name, when *this* descriptor models a "to-one" role
+	wstring request; // SQL request used to access the to-one or to-many roles.
+};
+
+typedef map<wstring,wstring> FkToPkMap;		// Maps FKs with related PKs
+typedef map<wstring,MemberDesc> MemberMap;	// Maps data fields and related C++ type/class
+typedef MemberMap::iterator FieldIt;
 
 class MappedTable  {
 public:
-	bool isAssociation();
-	void generateClassRepresentation(); //Generate cpp skeleton for *this* class
+	bool isAssociation() const ; 	//Returns true if the mapped table represents an association (i.e: table FKs and no data inside) rather than a class.
+	void generateClassHeader(); // Generate hxx skeleton for *this* table
+	void generateClassImplementation() {}; //Generate cxx body for *this* class
+	void generateSociConverter() {}; // Generate hxx (instantiated template) function body for data transfer from db
 protected:
 	friend class Parser;
 	friend class ObjectModel;
-	bool isRole(const wstring& name);
+	bool isNullable(const wstring& fieldName) const ; 
+	bool isForeignKey(const wstring& fieldName) const ;  //TODO: VIRER
+	bool isToOneRole(const wstring& roleName) const ; 
+	bool isToManyRole(const wstring& roleName) const ; 
+	bool isRole(const wstring& roleName) const ; 
+	vector<wstring> getAllRoles() const ; 
+	wstring storageClass(const wstring&field) const ;  //type simpl Nullable, to-many, to-one.
+  std::pair<wstring,wstring> getLinkedClasses() const ; 
 	wstring className;
 	wstring tableName;
-	wstring classRepresentation;
+	wstring classHeader;
 	wstring primaryKey;
-	FieldTypes fieldMap;	// Mapping <champ, type>*
-	RoleMap fkToPk;			// Mapping <fk,pk>*
-	NullableMap nullables;	// Liste des fields nullables, mappés en pointeurs
+	MemberMap members;			// Mapping <field or member, description>*
+	FkToPkMap fkToPk;				// Mapping <fk,pk>* for to-one associations
 }; 
 
 #endif

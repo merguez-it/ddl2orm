@@ -4,6 +4,7 @@
 #include "MappedTable.h"
 #include "MappingUtils.h"
 #include "ObjectModel.h"
+#include  "cppClassTemplate.inc.h"
 
 using namespace std;
 
@@ -55,35 +56,37 @@ TableSpec
 TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
 =   (identifier						(. fieldName=trimQuotes(t->val);			.)		
 	TypeSpec<typeDecl>								
-	ValueSpec<typeDecl>
+	ValueSpec<fieldName,mt>
 	[CheckSpec]
-   )													(. mt.fieldMap[fieldName]=typeDecl;	.)
- | (("PRIMARY"|"primary")("KEY"|"key")'(' identifier	(. mt.primaryKey=trimQuotes(t->val);	.)
+   )													(. mt.members[fieldName].type=typeDecl;			.)
+ | (("PRIMARY"|"primary")("KEY"|"key")'(' identifier	(. mt.primaryKey=trimQuotes(t->val);				.)
 	{','identifier										(. mt.primaryKey=L""; /* ignore composite PK  */	.)
 	}')' )						
 | ("FOREIGN" "KEY" '(' identifier	(. wstring role=trimQuotes(t->val), column=trimQuotes(t->val);			.)
-									(. replaceAll(L"Id",L"",role);	/* Vire "Id" du rôle-objet navigable */ .) 
-	')' "REFERENCES" identifier		(. mt.fieldMap[role]=camelize(trimQuotes(t->val));	.) 
-   '(' identifier					(. mt.fkToPk[column]=trimQuotes(t->val);									.)
+									(. replaceAll(L"Id",L"",role);	/* Vire "Id" du rôle-objet navigable - TODO: injecter les règles de nommage des rôles */ .)
+									(. mt.members[role].fkName=column;										.)
+									(. mt.members[role].kind=TO_ONE;										.) 
+	')' "REFERENCES" identifier		(. mt.members[role].type=camelize(trimQuotes(t->val));					.)
+   '(' identifier					(. mt.fkToPk[column]=trimQuotes(t->val);								.)
 	')'
    )											
 .
-TypeSpec<wstring &typeDecl> =							(. typeDecl=L"What_The_Fuck";		.)
-	("BOOLEAN")											(. typeDecl=L"auto_ptr<bool>";		.)
-|	("INTEGER" | "INT" | "int")							(. typeDecl=L"auto_ptr<long>";		.)
-|	("TINYINT"											(. typeDecl=L"auto_ptr<char>";		.)
-	|"SMALLINT"											(. typeDecl=L"auto_ptr<short>";		.)
+TypeSpec<wstring &typeDecl> =				(. typeDecl=L"What_The_Fuck";	.)
+	("BOOLEAN")								(. typeDecl=L"bool";			.)
+|	("INTEGER" | "INT" | "int")				(. typeDecl=L"int";				.)
+|	("TINYINT"								(. typeDecl=L"char";			.)
+	|"SMALLINT"								(. typeDecl=L"int";				.)
 	)							
 |	("TEXT"|"CHAR" '('number')' 
-	 | ("VARCHAR"|"varchar")'('number')')				(. typeDecl=L"auto_ptr<string>";	.)
+	 | ("VARCHAR"|"varchar")'('number')')	(. typeDecl=L"std::string";		.)
 |	("DOUBLE"|"BIG" "DECIMAL"|
 	 "DECIMAL"'('number [','number]')'					
-	)													(. typeDecl=L"auto_ptr<double>";	.)
-|	("DATE")											(. typeDecl=L"auto_ptr<string>";	.)
+	)										(. typeDecl=L"double";			.)
+|	("DATE")								(. typeDecl=L"std::tm";			.)
 .
-ValueSpec<wstring &typeDecl>
-= [(("NOT"|"not") ("NULL"|"null"))						(. replaceAll(L"auto_ptr<",L"",typeDecl);	.)
-														(. replaceAll(L">",L"",typeDecl);			.)
+ValueSpec<const wstring& fieldName,MappedTable& mt>  
+											(. mt.members[fieldName].kind=NULLABLE_DATA;	.) // Default is nulable
+=[(("NOT"|"not") ("NULL"|"null"))			(. mt.members[fieldName].kind=DATA;	.)
  | ("NULL"|"null")]
  [ ("DEFAULT"|"default") Value]
 .

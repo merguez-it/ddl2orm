@@ -31,7 +31,10 @@ CREATE TABLE DMI_COMPANY (
 
 	name_ref_labo VARCHAR(255),
 
-  PRIMARY KEY (dmiId, companyId, type)
+  PRIMARY KEY (dmiId, companyId, type),
+-- Ajouté par Mathias Franck
+  FOREIGN KEY (dmiId) REFERENCES dmi(dmiId),
+  FOREIGN KEY (companyId) REFERENCES company(companyId)
 
 );
 
@@ -48,7 +51,10 @@ CREATE TABLE DMI_LPP (
 	nbLppr INTEGER,
 
   PRIMARY KEY (dmiId, lpprId)
-
+  
+-- Ajouté par Mathias Franck
+  FOREIGN KEY (dmiId) REFERENCES dmi(dmiId),
+  FOREIGN KEY (lpprId) REFERENCES lppr(lpprId)
 );
 
 -- ----------------------------

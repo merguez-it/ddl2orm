@@ -93,8 +93,8 @@
 		6B184A0415108AD700E5C7DA /* headers */ = {
 			isa = PBXGroup;
 			children = (
-				6B1849E6150FC72400E5C7DA /* ObjectModel.h */,
 				6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */,
+				6B1849E6150FC72400E5C7DA /* ObjectModel.h */,
 				6B1849B6150F395200E5C7DA /* MappedTable.h */,
 				6B184A201510D13B00E5C7DA /* MappingUtils.h */,
 			);
