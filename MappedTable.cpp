@@ -1,6 +1,6 @@
 /*
  *  MappedTable.cpp
- *  ddl2cpp
+ *  ddl2orm
  *
  *  Created by Mathias Franck on 13/03/12.
  *  Copyright 2012 __MyCompanyName__. All rights reserved.
@@ -43,7 +43,7 @@ bool MappedTable::isRole(const wstring& roleName) const {
 // Returns true if the mapped table represents an association (i.e: table with 2 links and no simple data fields) rather than a class.
 // n-ary associations (n>2) and associations-classes not yet recognized (=> They are mapped as "real" objects)
 bool MappedTable::isAssociation() const { 
-	return (!members.empty()) && (fkToPk.size()*2==members.size() && 4==members.size()); // équivaut à : pas d'autres champs que 2 clés ... Beurk ...
+	return (!members.empty()) && fkToPk.size()==members.size() && (2==members.size()); // équivaut à : pas d'autres champs que 2 clés ... Beurk ...
 	//return primaryKey.empty(); // Si on mappe les classes d'assoces seulement comme des liens, quel accès aux infos de liens ?
 }
 
@@ -55,37 +55,34 @@ std::pair<wstring,wstring> MappedTable::getLinkedClasses() const {
   return result;
 }
 
-wstring MappedTable::storageClass(const wstring&field ) const { 
+wstring MappedTable::memberDecl(const wstring&field ) const { 
   assert(members.count(field)!=0);
 	wstring type=members.find(field)->second.type;
-	wstring result=type;
-	if (isToOneRole(field)) result=L"TO_ONE("+type+L")";
-	else if (isToManyRole(field)) result=L"TO_MANY("+type+L")";
-	else if (isNullable(field)) result=L"NULLABLE("+type+L")";
+	wstring result=L"column<"+type+L"> " + field;
+	if (isToOneRole(field)) result=L"reference<"+type+L"> " + field;
+	else if (isToManyRole(field)) result=L"COLLECTION("+type+L","+field+L")";
+	else if (isNullable(field)) { /* TO DO dans lorm: result=L"nullable_column<"+type+L">" */};
 	return result;
 }
 
 void MappedTable::generateClassHeader() {
 	if (!members.empty() &!isAssociation()) {
-		classHeader+= hxxPrologue;			// Hxx header
+		classHeader+= interfacePrologue;			// .h header
+		
 		for (FieldIt it=members.begin(); it!=members.end(); it++) {
-			if (isRole(it->first)) classHeader+=L"class "+it->second.type+L";\n";
-		}
-		classHeader+= hxxClassProplogue;	// Public finders
+			if (isRole(it->first)) classHeader+=L"class "+it->second.type+L";\n"; // Forward declarations
+		} //TODO: doubloner
+		
+		classHeader+= interfaceClassPrologue;	// Public fields
 		if (!primaryKey.empty()) {
-			classHeader+=findByIdDecl;
+			classHeader+=L"\tcolumn<int> id;\n";
 		}
-		if (members.find(L"name")!=members.end()) { // Voir si toujours pertinent, notamment pour products...
-			classHeader+=findByNameDecl;
-		}
-		for (FieldIt it=members.begin();it!=members.end();it++) {  // Public accessors
-			classHeader+= L"\tconst " + storageClass(it->first) + L"& "+ it->first + L"();\n" ;
-		}
-		classHeader+= hxxFields;		
 		for (FieldIt it=members.begin();it!=members.end();it++) { // Members mapped with their cpp type
-			classHeader += L"\t" + storageClass(it->first) + L" "+ it->first + L"_;\n"; 
+            if (primaryKey!=it->first) {
+                classHeader += L"\t" + memberDecl(it->first) + L";\n"; 
+            }
 		}	
-		classHeader += hxxEpilogue;		// Hop, les accolades et les #endif !
+		classHeader += interfaceEpilogue;		// Hop, les accolades et les #endif !
 		replaceAll(L"$className", className, classHeader);
 	} else {
 		wcout << className << L" skipped : no members could be mapped" << endl;

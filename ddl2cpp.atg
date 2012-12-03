@@ -49,21 +49,23 @@ TableSpec
 '('
 	TableItemSpec<mt> 
 	{[','] TableItemSpec<mt>}
- ')'[';']							(. 	mt.className=camelize(mt.tableName);	.)
+ ')'[';']							(. 	mt.className=camelize(mt.tableName); /*TODO: Injecter les règles de nommage des classes */	.)
+                                    (.	assert(!mt.className.empty());			.)
 									(.	model->tables[mt.className]=mt;			.)
 )
 .
 TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
-=   (identifier						(. fieldName=trimQuotes(t->val);			.)		
+=   (identifier						(. fieldName=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des champs */			.)		
 	TypeSpec<typeDecl>								
 	ValueSpec<fieldName,mt>
 	[CheckSpec]
-   )													(. mt.members[fieldName].type=typeDecl;			.)
- | (("PRIMARY"|"primary")("KEY"|"key")'(' identifier	(. mt.primaryKey=trimQuotes(t->val);				.)
+     )													(. mt.members[fieldName].type=typeDecl;			    .)
+ | (("PRIMARY"|"primary")("KEY"|"key")'(' identifier	(. mt.primaryKey=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des PK */				.)
 	{','identifier										(. mt.primaryKey=L""; /* ignore composite PK  */	.)
 	}')' )						
 | ("FOREIGN" "KEY" '(' identifier	(. wstring role=trimQuotes(t->val), column=trimQuotes(t->val);			.)
-									(. replaceAll(L"Id",L"",role);	/* Vire "Id" du rôle-objet navigable - TODO: injecter les règles de nommage des rôles */ .)
+									(. if (mt.members.count(column)!=0) mt.members.erase(column);			.)
+									(. replaceAll(L"Id",L"",role);	/* TODO: injecter les règles de nommage des rôles */ .)
 									(. mt.members[role].fkName=column;										.)
 									(. mt.members[role].kind=TO_ONE;										.) 
 	')' "REFERENCES" identifier		(. mt.members[role].type=camelize(trimQuotes(t->val));					.)
@@ -72,9 +74,9 @@ TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
    )											
 .
 TypeSpec<wstring &typeDecl> =				(. typeDecl=L"What_The_Fuck";	.)
-	("BOOLEAN")								(. typeDecl=L"bool";			.)
+	("BOOLEAN")								(. typeDecl=L"int";			.)
 |	("INTEGER" | "INT" | "int")				(. typeDecl=L"int";				.)
-|	("TINYINT"								(. typeDecl=L"char";			.)
+|	("TINYINT"								(. typeDecl=L"int";		.)
 	|"SMALLINT"								(. typeDecl=L"int";				.)
 	)							
 |	("TEXT"|"CHAR" '('number')' 
@@ -82,8 +84,9 @@ TypeSpec<wstring &typeDecl> =				(. typeDecl=L"What_The_Fuck";	.)
 |	("DOUBLE"|"BIG" "DECIMAL"|
 	 "DECIMAL"'('number [','number]')'					
 	)										(. typeDecl=L"double";			.)
-|	("DATE")								(. typeDecl=L"std::tm";			.)
+|	("DATE")								(. typeDecl=L"datetime";		.)
 .
+
 ValueSpec<const wstring& fieldName,MappedTable& mt>  
 											(. mt.members[fieldName].kind=NULLABLE_DATA;	.) // Default is nulable
 =[(("NOT"|"not") ("NULL"|"null"))			(. mt.members[fieldName].kind=DATA;	.)

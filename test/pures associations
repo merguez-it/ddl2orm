@@ -27,7 +27,6 @@ product_drugInteractionClass
 product_een
 product_indication
 product_molecule
-product_posologyunit
 product_reco
 product_redundant_molecule
 product_route
@@ -45,4 +44,4 @@ saumon_indicationGroup
 sfmg_contraindication
 sfmg_indicationGroup
 smr_asmr
-ucd_indicator
+igLinked

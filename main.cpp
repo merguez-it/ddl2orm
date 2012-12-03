@@ -15,13 +15,15 @@ int main (int argc, char * const argv[]) {
 	if (argc >2) outputDir=argv[2]; 
 	ObjectModel *model=new ObjectModel(fileName,outputDir);
 	err=model->parseDDLtoObjectModel();
-  assert(noErr==err);
+	assert(noErr==err);
 	if (noErr==err) {
+		assert(model->mapped_tables().size()==152);
+		MappedTables bidir_assoces=model->pure_associations_tables();
+		//      assert(bidir_assoces.size()==47);
+		
     std::wcout << L"Total mapped tables : " << model->mapped_tables().size() << std::endl;
-    std::wcout << L"Mapped pure associations: " << model->pure_associations_tables().size() << std::endl;
-
-    assert(model->mapped_tables().size()==152);
-    assert(model->pure_associations_tables().size()==47);
+    std::wcout << L"Mapped pure associations: " << bidir_assoces.size() << std::endl;
+		
     
 		err=model->generateCppFiles();
 	}

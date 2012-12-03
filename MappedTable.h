@@ -1,6 +1,6 @@
 /*
  *  MappedTable.h
- *  ddl2cpp
+ *  ddl2orm
  *
  * A MappedTable maps either à Class or an Association (tables "object1_object2") 
  * - It owns any required descriptive information about the mapped table (fields, roles, bidirectional associations, keys)
@@ -30,7 +30,7 @@ struct MemberDesc {
 	wstring type;	//  Class (to-one, to-manies) or simple type
 	// Following fields are only used to map role-members
 	wstring fkName;  // Foreign key name, when *this* descriptor models a "to-one" role
-	wstring request; // SQL request used to access the to-one or to-many roles.
+	wstring request; // SQL request used to access the to-one or to-many roles (SOCI only).
 };
 
 typedef map<wstring,wstring> FkToPkMap;		// Maps FKs with related PKs
@@ -40,6 +40,7 @@ typedef MemberMap::iterator FieldIt;
 class MappedTable  {
 public:
 	bool isAssociation() const ; 	//Returns true if the mapped table represents an association (i.e: table FKs and no data inside) rather than a class.
+
 	void generateClassHeader(); // Generate hxx skeleton for *this* table
 	void generateClassImplementation() {}; //Generate cxx body for *this* class
 	void generateSociConverter() {}; // Generate hxx (instantiated template) function body for data transfer from db
@@ -52,7 +53,7 @@ protected:
 	bool isToManyRole(const wstring& roleName) const ; 
 	bool isRole(const wstring& roleName) const ; 
 	vector<wstring> getAllRoles() const ; 
-	wstring storageClass(const wstring&field) const ;  //type simpl Nullable, to-many, to-one.
+	wstring memberDecl(const wstring&field) const ;  //member declaration depending on mapped kind : Simple value, Nullable, to-many, to-one.
   std::pair<wstring,wstring> getLinkedClasses() const ; 
 	wstring className;
 	wstring tableName;
