@@ -34,11 +34,12 @@
 		6B1849E6150FC72400E5C7DA /* ObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModel.h; sourceTree = "<group>"; };
 		6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModel.cpp; sourceTree = "<group>"; };
 		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
+		6B728237166ECD1A00360BA1 /* test-db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-db.sql"; path = "test/private/test-db.sql"; sourceTree = "<group>"; };
+		6B728238166ECD1A00360BA1 /* test-table.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-table.sql"; path = "test/private/test-table.sql"; sourceTree = "<group>"; };
+		6B728239166ECD1A00360BA1 /* VidalMono.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VidalMono.sql; path = test/private/VidalMono.sql; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
 		6B8EAEC314FEBE560023899E /* ddl2cpp.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2cpp.atg; sourceTree = "<group>"; };
 		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6BA82F09150395BF00ECD299 /* test-table.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-table.sql"; path = "test/test-table.sql"; sourceTree = "<group>"; };
-		6BC62AC415089223002A562C /* test-db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-db.sql"; path = "test/test-db.sql"; sourceTree = "<group>"; };
 		6BC62AD115089359002A562C /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = cocoGenerated/Parser.cpp; sourceTree = "<group>"; };
 		6BC62AD215089359002A562C /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = cocoGenerated/Parser.h; sourceTree = "<group>"; };
 		6BC62AD315089359002A562C /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = cocoGenerated/Scanner.cpp; sourceTree = "<group>"; };
@@ -104,8 +105,9 @@
 		6BA82F081503959F00ECD299 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				6BC62AC415089223002A562C /* test-db.sql */,
-				6BA82F09150395BF00ECD299 /* test-table.sql */,
+				6B728237166ECD1A00360BA1 /* test-db.sql */,
+				6B728238166ECD1A00360BA1 /* test-table.sql */,
+				6B728239166ECD1A00360BA1 /* VidalMono.sql */,
 			);
 			name = test;
 			sourceTree = "<group>";
