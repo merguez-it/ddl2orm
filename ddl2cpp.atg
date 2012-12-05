@@ -54,13 +54,13 @@ TableSpec
 									(.	model->tables[mt.className]=mt;			.)
 )
 .
-TableItemSpec<MappedTable& mt>		(. wstring role; wstring typeDecl;		.)
+TableItemSpec<MappedTable& mt>		(. wstring role; wstring typeDecl;			.)
 =   (identifier						(. role=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des champs */			.)		
 	TypeSpec<typeDecl>								
 	ValueSpec<role,mt>
 	[CheckSpec]
-     )													(. mt.members[role].roleName=role;   		    .)
-														(. mt.members[role].type=typeDecl;			    .)
+     )								(. mt.members[role].roleName=role;   		.)
+									(. mt.members[role].type=typeDecl;			.)
  | (("PRIMARY"|"primary")("KEY"|"key")'(' ['"']identifier['"']	(. mt.primaryKey=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des PK */				.)
 	{','['"']identifier['"']							(. mt.primaryKey=L""; /* ignore composite PK  */	.)
 	}')' )						

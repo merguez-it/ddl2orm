@@ -45,6 +45,7 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 			MemberDesc virtual_member;
 			virtual_member.kind=ONE_TO_MANY;
 			virtual_member.type=mt.className;
+			virtual_member.roleName=fieldIt->first;
 			wstring generatedName=targetMappedTable.add_to_many_role(mt.className, virtual_member);
 			if (generatedName!=mt.className+L"s") { 
 				wcout << L"[WARNING] One-to-many generated role: " << mt.className <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;

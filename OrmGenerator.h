@@ -20,8 +20,8 @@ public:
 protected:
 	wstring forwardDeclarations(const MappedTable& mt) const;
 	wstring memberDeclaration(const MappedTable& mt, const wstring&field) const ;  //member declaration depending on mapped kind : Simple value, Nullable, to-many, to-one.
-	wstring generateClassHeader(const MappedTable& mt);
-
+	wstring classHeader(const MappedTable& mt);
+	wstring classImplementation(const MappedTable& mt);
 	const ObjectModel& model;
 };
 

@@ -10,7 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <wchar.h>
-
+#include <set>
 #include "MappingUtils.h"
 #include "OrmGenerator.h"
 #include "cppClassTemplate.inc.h"
@@ -25,7 +25,7 @@ wstring OrmGenerator::memberDeclaration(const MappedTable& mt, const wstring& fi
 	wstring result=L"column<"+type+L"> " + field;
 	if (mt.isToOneRole(field)) result=L"reference<"+type+L"> " + field;
 	else if (mt.isToManyRole(field)) result=L"COLLECTION("+type+L","+field+L")";
-	else if (mt.isNullable(field)) { /* TO DO dans lorm: result=L"nullable_column<"+type+L">" */}
+	else if (mt.isNullable(field)) { /* result=L"nullable_column<"+type+L"> "+ field; */}
 	return result;
 }
 
@@ -45,7 +45,34 @@ wstring OrmGenerator::forwardDeclarations(const MappedTable& mt) const {
 	return result;
 }
 
-wstring OrmGenerator::generateClassHeader(const MappedTable& mt) {
+wstring OrmGenerator::classHeader(const MappedTable& mt) {
+	wstring classHeader;
+	if (!mt.members.empty()) {
+		classHeader += interfacePrologue;			// .h header
+		classHeader += forwardDeclarations(mt);
+		classHeader += interfaceClassPrologue;	// Public fields
+		if (!mt.primaryKey.empty()) {
+			classHeader+=L"\tcolumn<int> id;\n";
+		}
+		set < MemberDesc, less_decl> ordered_decls;
+		for (FieldIt it=mt.members.begin();it!=mt.members.end();it++) { // Members mapped with their cpp type
+			if (mt.primaryKey!=it->first) {
+				ordered_decls.insert(it->second); 
+			}
+		}
+		for (set < MemberDesc >::const_iterator it=ordered_decls.begin();it!=ordered_decls.end();it++) {
+			classHeader += L"\t" + memberDeclaration(mt,it->roleName) + L";\n";
+		}
+		classHeader += interfaceEpilogue;		// Hop, les accolades et les #endif !
+		replaceAll(L"$className", mt.className, classHeader);
+		replaceAll(L"$tableName", mt.tableName, classHeader);
+	} else {
+		wcout << L"[WARNING] " << mt.className << L" skipped : no members could be mapped" << endl;
+	}
+	return classHeader;
+};
+
+wstring OrmGenerator::classImplementation(const MappedTable& mt) {
 	wstring classHeader;
 	if (!mt.members.empty()) {
 		classHeader += interfacePrologue;			// .h header
@@ -78,7 +105,7 @@ int OrmGenerator::generateCppFiles() {
 			string path=model.outputDir+PATH_SEPARATOR+className+".h";
 			wofstream out(path.c_str());
 			if (out.is_open())	{		
-				out <<	generateClassHeader(mt);
+				out <<	classHeader(mt);
 				cout << className << ".h and .cpp generated ( "<< mt.members.size() << " members mapped )" << endl;
 			}
 			if (out.fail()) {

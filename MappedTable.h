@@ -12,7 +12,7 @@
  */
 #ifndef MAPPED_TABLE_H
 #define MAPPED_TABLE_H
-
+#include <assert.h>
 #include <stdlib.h>
 #include <string>
 #include <map>
@@ -21,7 +21,7 @@ using namespace std;
 
 
 enum  MemberKind {
-	DATA, NULLABLE_DATA, TO_ONE, MANY_TO_MANY, ONE_TO_MANY
+	DATA, NULLABLE_DATA, TO_ONE, ONE_TO_MANY, MANY_TO_MANY, MANY_TO_MANY_WITH_INFO
 };
 
 // Describes a member to map 
@@ -39,9 +39,17 @@ struct MemberDesc {
 	wstring linkTable;// Link table used to hold a relationship, when this descriptor models one end of a many-to-many relationship 
 };
 
+class less_decl {
+public:
+	bool operator()(const MemberDesc &l , const MemberDesc &r) const {
+		return ( l.kind == r.kind ? (l.type == r.type ? l.roleName < r.roleName : l.type < r.type) : l.kind < r.kind );
+	};
+};
+
 typedef map<wstring,wstring> FkToPkMap;		// Maps FKs with related PKs
 typedef map<wstring,MemberDesc> MemberMap;	// Maps data fields and related C++ type/class
 typedef MemberMap::const_iterator FieldIt;
+
 
 class MappedTable  {
 public:
