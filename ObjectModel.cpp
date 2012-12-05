@@ -13,8 +13,6 @@
 #include "Scanner.h"
 #include "Parser.h"
 
-#define PATH_SEPARATOR "/"
-
 ObjectModel::ObjectModel(const string& sqlFile, const string& anOutputDir): outputDir(anOutputDir) {
 	wstring wsqlFile=wstring(sqlFile.begin(),sqlFile.end());
 	Scanner *scanner=new Scanner(wsqlFile.c_str());
@@ -108,27 +106,4 @@ void ObjectModel::populateRelationships() {
 			populateReversedToOne(mt);
 		} 
 	}
-}
-
-int ObjectModel::generateCppFiles() {
-	int result=0;
-	for (MappedTables::iterator it=tables.begin(); it!=tables.end(); it++) {
-		MappedTable& mt=it->second;
-		string className=string(mt.className.begin(),mt.className.end());
-		assert(!className.empty());
-		if (!mt.isAssociation()) {
-			string path=outputDir+PATH_SEPARATOR+className+".h";
-			wofstream out(path.c_str());
-			if (out.is_open())	{		
-					mt.generateClassHeader();
-					out <<	mt.classHeader;
-					cout << className << ".h and .cpp generated ( "<< mt.members.size() << " members mapped )" << endl;
-			}
-			if (out.fail()) {
-				cout << "I/O error while generating " << path << endl;
-				result=-1;
-			}
-		}
-	} 	
-	return result;
 }

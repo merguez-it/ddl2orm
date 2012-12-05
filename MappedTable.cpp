@@ -51,53 +51,6 @@ bool MappedTable::isAssociation() const {
 	return (!members.empty()) && fkToPk.size()==members.size() && (2==members.size()); // équivaut à : pas d'autres champs que 2 clés ... bof ...
 }
 
-wstring MappedTable::memberDecl(const wstring& field ) const { 
-  assert(members.count(field)!=0);
-	wstring type=members.find(field)->second.type;
-	wstring result=L"column<"+type+L"> " + field;
-	if (isToOneRole(field)) result=L"reference<"+type+L"> " + field;
-	else if (isToManyRole(field)) result=L"COLLECTION("+type+L","+field+L")";
-	else if (isNullable(field)) { /* TO DO dans lorm: result=L"nullable_column<"+type+L">" */}
-	return result;
-}
-
-wstring MappedTable::generateForwardDeclarations() const {
-	wstring result;
-	vector<wstring> already_declared;
-	already_declared.push_back(L"class " + className + L";\n"); // Do not forward-declare *this* mapped class
-	for (FieldIt it = members.begin(); it != members.end(); it++) {
-		if (isRole(it->first)) {					
-			wstring forward_declaration = L"class " + it->second.type + L";\n";
-			if (find(already_declared.begin(), already_declared.end(), forward_declaration) == already_declared.end()) {
-				already_declared.push_back(forward_declaration);
-				result += forward_declaration;
-			}
-		}
-	} 
-	return result;
-}
-
-void MappedTable::generateClassHeader() {
-	if (!members.empty()) {
-		classHeader += interfacePrologue;			// .h header
-		classHeader += generateForwardDeclarations();
-		classHeader += interfaceClassPrologue;	// Public fields
-		if (!primaryKey.empty()) {
-			classHeader+=L"\tcolumn<int> id;\n";
-		}
-		for (FieldIt it=members.begin();it!=members.end();it++) { // Members mapped with their cpp type
-			if (primaryKey!=it->first) {
-					classHeader += L"\t" + memberDecl(it->first) + L";\n"; 
-			}
-		}	
-		classHeader += interfaceEpilogue;		// Hop, les accolades et les #endif !
-		replaceAll(L"$className", className, classHeader);
-		replaceAll(L"$tableName", tableName, classHeader);
-	} else {
-		wcout << L"[WARNING] " << className << L" skipped : no members could be mapped" << endl;
-	}
-};
-
 // Returns the pair of member descriptors representing role-ends of a MappedTable
 // that is assumed to model a bi-directional association.
 std::pair<MemberDesc , MemberDesc> MappedTable::getLinkedRoles() const {

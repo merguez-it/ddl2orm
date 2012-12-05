@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
 		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
+		6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
 		6BC62AD515089359002A562C /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD115089359002A562C /* Parser.cpp */; };
 		6BC62AD615089359002A562C /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD315089359002A562C /* Scanner.cpp */; };
@@ -37,6 +38,8 @@
 		6B728237166ECD1A00360BA1 /* test-db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-db.sql"; path = "test/private/test-db.sql"; sourceTree = "<group>"; };
 		6B728238166ECD1A00360BA1 /* test-table.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "test-table.sql"; path = "test/private/test-table.sql"; sourceTree = "<group>"; };
 		6B728239166ECD1A00360BA1 /* VidalMono.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VidalMono.sql; path = test/private/VidalMono.sql; sourceTree = "<group>"; };
+		6B72829C166EDAE300360BA1 /* OrmGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrmGenerator.h; sourceTree = "<group>"; };
+		6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrmGenerator.cpp; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
 		6B8EAEC314FEBE560023899E /* ddl2cpp.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2cpp.atg; sourceTree = "<group>"; };
 		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 				6B8EAECD14FED55B0023899E /* main.cpp */,
 				6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */,
 				6B1849B7150F395200E5C7DA /* MappedTable.cpp */,
+				6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -98,6 +102,7 @@
 				6B1849E6150FC72400E5C7DA /* ObjectModel.h */,
 				6B1849B6150F395200E5C7DA /* MappedTable.h */,
 				6B184A201510D13B00E5C7DA /* MappingUtils.h */,
+				6B72829C166EDAE300360BA1 /* OrmGenerator.h */,
 			);
 			name = headers;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				6BC62AD615089359002A562C /* Scanner.cpp in Sources */,
 				6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */,
 				6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */,
+				6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

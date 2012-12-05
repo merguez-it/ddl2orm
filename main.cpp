@@ -1,7 +1,8 @@
 #include <iostream>
-#include "ObjectModel.h"
-
 #include <assert.h>
+
+#include "ObjectModel.h"
+#include "OrmGenerator.h"
 
 #define noErr 0
 using namespace std;
@@ -21,7 +22,8 @@ int main (int argc, char * const argv[]) {
 		//      assert(bidir_assoces.size()==47);
 		std::wcout << L"Total mapped tables : " << model->mapped_tables().size() << std::endl;
 		std::wcout << L"Mapped pure associations: " << bidir_assoces.size() << std::endl;
-		err=model->generateCppFiles();
+		OrmGenerator gen(*model);
+		err=gen.generateCppFiles();
 	}
 	delete model;
 	return err;

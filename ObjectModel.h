@@ -34,13 +34,16 @@ typedef map<wstring,MappedTable,case_insensistive_compare> MappedTables;
 class Parser;
 
 class ObjectModel  {
+	
 public:
 	ObjectModel(const string& sqlFile, const string& anOutputDir);
 	int parseDDLtoObjectModel();
-	int generateCppFiles();
-  const MappedTables& mapped_tables() const {return tables;}
-  MappedTables pure_associations_tables() const ;
+  	const MappedTables& mapped_tables() const {return tables;}
+  	MappedTables pure_associations_tables() const ;
 private:
+	
+	friend class OrmGenerator;
+
 	void populateReversedToOne(MappedTable& mt);
 	void populateManyToMany(MappedTable& relation);
 	void populateRelationships();

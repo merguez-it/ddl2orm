@@ -53,6 +53,7 @@ protected:
 	
 	friend class Parser;
 	friend class ObjectModel;
+	friend class OrmGenerator;
 	
 	bool isNullable(const wstring& fieldName) const ; 
 	bool isForeignKey(const wstring& fieldName) const ; 
@@ -61,12 +62,9 @@ protected:
 	bool isRole(const wstring& roleName) const ; 
 	vector<wstring> getAllRoles() const ; 
 	wstring add_to_many_role(const wstring& roleName, MemberDesc &role); 
-	wstring memberDecl(const wstring&field) const ;  //member declaration depending on mapped kind : Simple value, Nullable, to-many, to-one.
 	std::pair<MemberDesc , MemberDesc> getLinkedRoles() const;
-	wstring generateForwardDeclarations() const;
 	wstring className;
 	wstring tableName;
-	wstring classHeader;
 	wstring primaryKey;
 	MemberMap members;			// Mapping <field or member, description>*
 	FkToPkMap fkToPk;				// Mapping <fk,pk>* for to-one associations
