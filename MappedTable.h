@@ -26,35 +26,44 @@ enum  MemberKind {
 
 // Describes a member to map 
 struct MemberDesc {
+	wstring roleName; // Names the role using conventions
 	MemberKind kind; 
-	wstring type;	//  Class (to-one, to-manies) or simple type
+	wstring type;	//  Class (to-one, to-manies) or simple type (int,string...)
 	// Following fields are only used to map role-members
-	wstring fkName;  // Foreign key name, when *this* descriptor models a "to-one" role
-	wstring request; // SQL request used to access the to-one or to-many roles (SOCI only).
+	wstring fkName;  	// - Foreign key name to a foreign object, when the described member is of  kind TO_ONE.
+									 	// - When the described member is a ONE_TO_MANY role, fkName is the key used to request elements of the 
+									 	//   ONE_TO_MANY set from the foreign table.
+									 	// - When the described member is of kind MANY_TO_MANY, fkName is the foreign key 
+	                 	//   in the link table used to fetch those elements.
+	
+	wstring linkTable;// Link table used to hold a relationship, when this descriptor models one end of a many-to-many relationship 
 };
 
 typedef map<wstring,wstring> FkToPkMap;		// Maps FKs with related PKs
 typedef map<wstring,MemberDesc> MemberMap;	// Maps data fields and related C++ type/class
-typedef MemberMap::iterator FieldIt;
+typedef MemberMap::const_iterator FieldIt;
 
 class MappedTable  {
 public:
 	bool isAssociation() const ; 	//Returns true if the mapped table represents an association (i.e: table FKs and no data inside) rather than a class.
-
 	void generateClassHeader(); // Generate hxx skeleton for *this* table
 	void generateClassImplementation() {}; //Generate cxx body for *this* class
-	void generateSociConverter() {}; // Generate hxx (instantiated template) function body for data transfer from db
+
 protected:
+	
 	friend class Parser;
 	friend class ObjectModel;
+	
 	bool isNullable(const wstring& fieldName) const ; 
-	bool isForeignKey(const wstring& fieldName) const ;  //TODO: VIRER
+	bool isForeignKey(const wstring& fieldName) const ; 
 	bool isToOneRole(const wstring& roleName) const ; 
 	bool isToManyRole(const wstring& roleName) const ; 
 	bool isRole(const wstring& roleName) const ; 
 	vector<wstring> getAllRoles() const ; 
+	wstring add_to_many_role(const wstring& roleName, MemberDesc &role); 
 	wstring memberDecl(const wstring&field) const ;  //member declaration depending on mapped kind : Simple value, Nullable, to-many, to-one.
-  std::pair<wstring,wstring> getLinkedClasses() const ; 
+	std::pair<MemberDesc , MemberDesc> getLinkedRoles() const;
+	wstring generateForwardDeclarations() const;
 	wstring className;
 	wstring tableName;
 	wstring classHeader;

@@ -46,7 +46,7 @@ ddl2cpp= {
 TableSpec						
 = 
 (identifier							(. MappedTable mt; mt.tableName=trimQuotes(t->val);	.)
-'('
+ '('
 	TableItemSpec<mt> 
 	{[','] TableItemSpec<mt>}
  ')'[';']							(. 	mt.className=camelize(mt.tableName); /*TODO: Injecter les règles de nommage des classes */	.)
@@ -54,18 +54,20 @@ TableSpec
 									(.	model->tables[mt.className]=mt;			.)
 )
 .
-TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
-=   (identifier						(. fieldName=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des champs */			.)		
+TableItemSpec<MappedTable& mt>		(. wstring role; wstring typeDecl;		.)
+=   (identifier						(. role=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des champs */			.)		
 	TypeSpec<typeDecl>								
-	ValueSpec<fieldName,mt>
+	ValueSpec<role,mt>
 	[CheckSpec]
-     )													(. mt.members[fieldName].type=typeDecl;			    .)
+     )													(. mt.members[role].roleName=role;   		    .)
+														(. mt.members[role].type=typeDecl;			    .)
  | (("PRIMARY"|"primary")("KEY"|"key")'(' identifier	(. mt.primaryKey=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des PK */				.)
 	{','identifier										(. mt.primaryKey=L""; /* ignore composite PK  */	.)
 	}')' )						
-| ("FOREIGN" "KEY" '(' identifier	(. wstring role=trimQuotes(t->val), column=trimQuotes(t->val);			.)
-									(. if (mt.members.count(column)!=0) mt.members.erase(column);			.)
+| ("FOREIGN" "KEY" '(' identifier	(. role=trimQuotes(t->val); wstring column=trimQuotes(t->val);			.)
+									(. if (mt.members.count(column)!=0) mt.members.erase(column);	/* we don't keep xxxId, rather we model a xxx role*/		.)
 									(. replaceAll(L"Id",L"",role);	/* TODO: injecter les règles de nommage des rôles */ .)
+									(. mt.members[role].roleName=role;   		    .)
 									(. mt.members[role].fkName=column;										.)
 									(. mt.members[role].kind=TO_ONE;										.) 
 	')' "REFERENCES" identifier		(. mt.members[role].type=camelize(trimQuotes(t->val));					.)
@@ -73,10 +75,11 @@ TableItemSpec<MappedTable& mt>		(. wstring fieldName; wstring typeDecl;		.)
 	')'
    )											
 .
-TypeSpec<wstring &typeDecl> =				(. typeDecl=L"What_The_Fuck";	.)
-	("BOOLEAN")								(. typeDecl=L"int";			.)
+
+TypeSpec<wstring &typeDecl> =				(. typeDecl=L"What_The_F_ck";	.)
+	("BOOLEAN")								(. typeDecl=L"int";				.)
 |	("INTEGER" | "INT" | "int")				(. typeDecl=L"int";				.)
-|	("TINYINT"								(. typeDecl=L"int";		.)
+|	("TINYINT"								(. typeDecl=L"int";				.)
 	|"SMALLINT"								(. typeDecl=L"int";				.)
 	)							
 |	("TEXT"|"CHAR" '('number')' 
@@ -99,6 +102,7 @@ CheckSpec
 	CheckCondition
  ')'
 .
+
 CheckCondition
 =(	identifier 
 	((comparator Value) | (("IN"|"in") ValueList) |	("IS" ["NOT"|"not"] ("NULL"|"null") )) 
@@ -106,10 +110,13 @@ CheckCondition
  )	|
  ( '(' CheckCondition ')') 
 .
+
 ValueList
 = '(' Value {',' Value} ')'
 .
+
 Value
 = (['+'| '-'] number) | ('\''{ANY}'\'') | "NULL" | identifier
 .
+
 END ddl2cpp.

@@ -30,6 +30,7 @@ struct case_insensistive_compare : std::binary_function<wstring, wstring, bool> 
 };
 
 typedef map<wstring,MappedTable,case_insensistive_compare> MappedTables;
+
 class Parser;
 
 class ObjectModel  {
@@ -43,7 +44,7 @@ private:
 	void populateReversedToOne(MappedTable& mt);
 	void populateManyToMany(MappedTable& relation);
 	void populateRelationships();
-	std::pair<wstring,wstring> getLinkedClasses();
+	std::pair< MappedTable , MappedTable > getLinkedClasses(const MappedTable& mt) const;
 	friend class Parser;
 	Parser *parser;
 	string outputDir;
