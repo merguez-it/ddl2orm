@@ -7,7 +7,7 @@
  * - Thus, it allows full generation of C++ representation for the mapped class.
  *
  * Created by Mathias Franck on 13/03/12.
- * Copyright 2012 Vidal. All rights reserved.
+ *  Copyleft 2012 Merguez-IT. All rights reserved.
  *
  */
 #ifndef MAPPED_TABLE_H
@@ -53,10 +53,19 @@ typedef MemberMap::const_iterator FieldIt;
 
 class MappedTable  {
 public:
-	bool isAssociation() const ; 	//Returns true if the mapped table represents an association (i.e: table FKs and no data inside) rather than a class.
-	void generateClassHeader(); // Generate hxx skeleton for *this* table
-	void generateClassImplementation() {}; //Generate cxx body for *this* class
+	
+	// Returns true if the mapped table represents a pure binary association,
+	// that won't be mapped as a an object, but as a navigation accessor.
+	// i.e: It contains 2 FKs and no data.
+	// n-ary associations (n>2) are not yet recognized;
 
+	bool isPureBinaryAssociation() const ; 
+	
+	// Returns true if the mapped table represents an association class
+	// i.e: contains data and no single PK.
+	// Skipped from generation for the moment.
+	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty();} 	
+	
 protected:
 	
 	friend class Parser;

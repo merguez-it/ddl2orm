@@ -3,7 +3,7 @@
  *  ddl2cpp
  *
  *  Created by Mathias Franck on 14/03/12.
- *  Copyright 2012 Vidal. All rights reserved.
+ *  Copyleft 2012 Merguez-IT. All rights reserved.
  *
  */
 #ifndef MAPPING_UTILS_H

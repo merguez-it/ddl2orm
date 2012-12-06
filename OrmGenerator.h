@@ -16,12 +16,15 @@
 class OrmGenerator  {
 public:
 	OrmGenerator(const ObjectModel& aModel) : model(aModel) {};
-	int generateCppFiles();
+	int generateFiles();
 protected:
 	wstring forwardDeclarations(const MappedTable& mt) const;
 	wstring memberDeclaration(const MappedTable& mt, const wstring&field) const ;  //member declaration depending on mapped kind : Simple value, Nullable, to-many, to-one.
-	wstring classHeader(const MappedTable& mt);
-	wstring classImplementation(const MappedTable& mt);
+	wstring classHeader(const MappedTable& mt) const;
+	wstring classImplementation(const MappedTable& mt) const;
+	wstring fieldImpl(const MappedTable& mt,const MemberDesc& field) const;
+	wstring toOneImpl(const MappedTable& mt,const MemberDesc& field) const;
+
 	const ObjectModel& model;
 };
 

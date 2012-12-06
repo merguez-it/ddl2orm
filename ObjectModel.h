@@ -6,7 +6,7 @@
  *  store the parsed tables descriptions, and generates corresponding cpp mapping for ODB.
  *
  *  Created by Mathias Franck on 13/03/12.
- *  Copyright 2012 Vidal. All rights reserved.
+ *  Copyleft 2012 Merguez-IT. All rights reserved.
  *
  */
 #ifndef OBJECT_MODEL_H

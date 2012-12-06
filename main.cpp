@@ -1,3 +1,12 @@
+/*
+ *  main.cpp
+ *  ddl2orm
+ *
+ *  Created by Mathias Franck on 13/03/12.
+ *  Copyleft 2012 Merguez-IT. All rights reserved.
+ *
+ */
+
 #include <iostream>
 #include <assert.h>
 
@@ -17,13 +26,11 @@ int main (int argc, char * const argv[]) {
 	ObjectModel *model=new ObjectModel(fileName,outputDir);
 	err=model->parseDDLtoObjectModel();
 	if (noErr==err) {
-//		assert(model->mapped_tables().size()==152);
 		MappedTables bidir_assoces=model->pure_associations_tables();
-		//      assert(bidir_assoces.size()==47);
 		std::wcout << L"Total mapped tables : " << model->mapped_tables().size() << std::endl;
 		std::wcout << L"Mapped pure associations: " << bidir_assoces.size() << std::endl;
 		OrmGenerator gen(*model);
-		err=gen.generateCppFiles();
+		err=gen.generateFiles();
 	}
 	delete model;
 	return err;

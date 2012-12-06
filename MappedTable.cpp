@@ -3,7 +3,7 @@
  *  ddl2orm
  *
  *  Created by Mathias Franck on 13/03/12.
- *  Copyright 2012 __MyCompanyName__. All rights reserved.
+ *  Copy 2012 __MyCompanyName__. All rights reserved.
  *
  */
 #include <iostream>
@@ -12,7 +12,6 @@
 
 #include "MappingUtils.h"
 #include "MappedTable.h"
-#include "cppClassTemplate.inc.h"
 
 using namespace std;
 
@@ -46,15 +45,16 @@ bool MappedTable::isRole(const wstring& roleName) const {
 }
 
 // Returns true if the mapped table represents an association (i.e: table with 2 links and no simple data fields) rather than a class.
-// n-ary associations (n>2) and associations-classes not yet recognized (=> They are mapped as "real" objects)
-bool MappedTable::isAssociation() const { 
+bool MappedTable::isPureBinaryAssociation() const { 
 	return (!members.empty()) && fkToPk.size()==members.size() && (2==members.size()); // équivaut à : pas d'autres champs que 2 clés ... bof ...
 }
+
+
 
 // Returns the pair of member descriptors representing role-ends of a MappedTable
 // that is assumed to model a bi-directional association.
 std::pair<MemberDesc , MemberDesc> MappedTable::getLinkedRoles() const {
-	assert(isAssociation()) ;
+	assert(isPureBinaryAssociation()) ;
 	MemberDesc role1=members.begin()->second;
 	MemberDesc role2=(++members.begin())->second;
 	return pair<MemberDesc , MemberDesc >(role1,role2);

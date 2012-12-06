@@ -4,7 +4,6 @@
 #include "MappedTable.h"
 #include "MappingUtils.h"
 #include "ObjectModel.h"
-#include  "cppClassTemplate.inc.h"
 
 using namespace std;
 
@@ -62,7 +61,7 @@ TableItemSpec<MappedTable& mt>		(. wstring role; wstring typeDecl;			.)
      )								(. mt.members[role].roleName=role;   		.)
 									(. mt.members[role].type=typeDecl;			.)
  | (("PRIMARY"|"primary")("KEY"|"key")'(' ['"']identifier['"']	(. mt.primaryKey=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des PK */				.)
-	{','['"']identifier['"']							(. mt.primaryKey=L""; /* ignore composite PK  */	.)
+	{','['"']identifier['"']									(. mt.primaryKey=L""; /* ignore composite PK  */	.)
 	}')' )						
 | ("FOREIGN" "KEY" '(' ['"']identifier['"']	(. role=trimQuotes(t->val); wstring column=trimQuotes(t->val);			.)
 									(. if (mt.members.count(column)!=0) mt.members.erase(column);	/* we don't keep xxxId, rather we model a xxx role*/		.)

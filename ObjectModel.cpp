@@ -3,7 +3,7 @@
  *  ddl2orm
  *
  *  Created by Mathias Franck on 13/03/12.
- *  Copyright 2012 Vidal. All rights reserved.
+ *  Copyleft 2012 Merguez-IT. All rights reserved.
  *
  */
 #include <sstream>
@@ -55,14 +55,14 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 }
 
 // Returns the pair of MappedTable representing role-ends description, for a given MappedTable that represents a bi-directional association.
-std::pair<MappedTable , MappedTable> ObjectModel::getLinkedClasses(const MappedTable& mt) const {
-	assert(mt.isAssociation());
+std::pair<MappedTable, MappedTable> ObjectModel::getLinkedClasses(const MappedTable& mt) const {
+	assert(mt.isPureBinaryAssociation());
 	pair<MemberDesc , MemberDesc > p = mt.getLinkedRoles();
 	wstring class_role1=p.first.type;
 	wstring class_role2=p.second.type;
 	assert(tables.count(class_role1)==1);
 	assert(tables.count(class_role2)==1);
-	return pair<MappedTable , MappedTable >(tables.find(class_role1)->second,tables.find(class_role2)->second);
+	return pair<MappedTable, MappedTable >(tables.find(class_role1)->second,tables.find(class_role2)->second);
 }
 
 // Given an association table (i.e: "many-to-many" link table), populates MappedTables matching the ends of the association with member-specification  
@@ -70,8 +70,9 @@ std::pair<MappedTable , MappedTable> ObjectModel::getLinkedClasses(const MappedT
 // Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships. 
 // 					 "bidirectional_association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
 void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
-	assert(bidirectional_association.isAssociation());
+	assert(bidirectional_association.isPureBinaryAssociation());
 	pair<MemberDesc,MemberDesc> roles = bidirectional_association.getLinkedRoles();
+	
 	MemberDesc role1 = roles.first;
 	MemberDesc role2 = roles.second;
 	assert(tables.count(role1.type)==1);
@@ -91,7 +92,7 @@ void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
 MappedTables ObjectModel::pure_associations_tables() const {
   MappedTables result;
 	for (MappedTables::const_iterator it=tables.begin(); it!=tables.end(); it++) {
-    if (it->second.isAssociation()) {
+    if (it->second.isPureBinaryAssociation()) {
       result.insert(*it);
     }
   }
@@ -101,7 +102,7 @@ MappedTables ObjectModel::pure_associations_tables() const {
 void ObjectModel::populateRelationships() {
 	for (MappedTables::iterator it=tables.begin(); it!=tables.end(); it++) {
 		MappedTable& mt=it->second;
-		if (mt.isAssociation()) {
+		if (mt.isPureBinaryAssociation()) {
 			populateManyToMany(mt);
 		} else {
 			populateReversedToOne(mt);
