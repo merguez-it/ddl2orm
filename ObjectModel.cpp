@@ -24,10 +24,10 @@ int ObjectModel::parseDDLtoObjectModel() {
 	parser->Parse();
 	if (parser->errors->count == 0) {
 		populateRelationships();
-		wcout << L"[INFO] parsing ddl2cpp: OK" << endl;
+		wcout << L"[INFO] parsing ddl2orm: OK" << endl;
 	} 
 	else {
-		wcout << L"[ERROR] parsing ddl2cpp: KO" << endl;
+		wcout << L"[ERROR] parsing ddl2orm: KO" << endl;
 		return -1;
 	}
 	return 0;
@@ -45,8 +45,8 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 			MemberDesc virtual_member;
 			virtual_member.kind=ONE_TO_MANY;
 			virtual_member.type=mt.className;
-			virtual_member.roleName=fieldIt->first;
-			wstring generatedName=targetMappedTable.add_to_many_role(mt.className, virtual_member);
+			virtual_member.reverseRoleName=fieldIt->first;
+			wstring generatedName=targetMappedTable.add_to_many_role(mt.className, virtual_member); //TODO: Inject one to-many role name as it may be crappy
 			if (generatedName!=mt.className+L"s") { 
 				wcout << L"[WARNING] One-to-many generated role: " << mt.className <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
 			}

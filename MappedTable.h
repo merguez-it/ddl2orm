@@ -24,19 +24,27 @@ enum  MemberKind {
 	DATA, NULLABLE_DATA, TO_ONE, ONE_TO_MANY, MANY_TO_MANY, MANY_TO_MANY_WITH_INFO
 };
 
-// Describes a member to map 
+// Describes a member to map.
 struct MemberDesc {
-	wstring roleName; // Names the role using conventions
-	MemberKind kind; 
-	wstring type;	//  Class (to-one, to-manies) or simple type (int,string...)
-	// Following fields are only used to map role-members
-	wstring fkName;  	// - Foreign key name to a foreign object, when the described member is of  kind TO_ONE.
-									 	// - When the described member is a ONE_TO_MANY role, fkName is the key used to request elements of the 
-									 	//   ONE_TO_MANY set from the foreign table.
-									 	// - When the described member is of kind MANY_TO_MANY, fkName is the foreign key 
-	                 	//   in the link table used to fetch those elements.
+	wstring roleName; 				// Names the role using conventions ( == key of "MemberMAp", see below)
+	MemberKind kind; 					// Kind of member
+	wstring type;							// Class (to-one, to-manies) or simple type (int,string...)
 	
-	wstring linkTable;// Link table used to hold a relationship, when this descriptor models one end of a many-to-many relationship 
+														// Following fields are used to map role-members
+	wstring fkName;  					// - Foreign key name to a foreign object, when the described member is of kind TO_ONE.
+														// - If the described member is a ONE_TO_MANY role, fkName is the key used to refer this TO_ONE object 
+														//   from the "many" side of the relationship
+														// - If the described member is of kind MANY_TO_MANY, fkName is the foreign key 
+	                 					//   stored in the link table, that is used to fetch the elements at the other side of the relationship.
+
+	wstring linkTable;				// Link table used to hold a relationship, when this descriptor models 
+
+	wstring reverseRoleName; 	// - If the described member is a TO_ONE role, reverseRoleName is the ONE_TO_MANY role name 
+														//   used at the other side of the relationship to refer *this* object.
+														// - If the described member is a ONE_TO_MANY role, reverseRoleName is the TO_ONE role name 
+														//   used at the other side of the relationship to refer *this* object.
+														// - otherwise, it is undefined.
+	
 };
 
 class less_decl {

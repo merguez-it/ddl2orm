@@ -91,6 +91,30 @@ wstring OrmGenerator::toOneImpl(const MappedTable& mt,const MemberDesc& field) c
 	return result;
 }
 
+wstring OrmGenerator::oneToManyImpl(const MappedTable& mt,const MemberDesc& field) const {
+	//	has_many(Person,Book,personal_library,owner);
+	wstring result;
+	MappedTable toManyClass=model.tables.find(field.type)->second;
+	if (!toManyClass.isAssociationClass()) { // TODO Map association classes as soon as lorm support it.    
+		MemberDesc reverseRole=mt.members.find(field.roleName)->second;
+		result=has_manyTemplate;
+		replaceAll(L"$className", mt.className, result);
+		replaceAll(L"$roleName", field.roleName, result);
+		replaceAll(L"$targetClassName", toManyClass.className, result);
+		toManyClass.members[field.roleName];
+		replaceAll(L"$reverseRoleName",field.reverseRoleName,result);		
+	}
+	return result;
+}
+
+wstring OrmGenerator::manyToManyImpl(const MappedTable& mt,const MemberDesc& field) const {
+	wstring result=hmbtTemplate;
+//	replaceAll(L"$className", mt.className, result);
+//	replaceAll(L"$roleName", field.roleName, result);
+//	replaceAll(L"$fkName", field.fkName, result);
+	return result;
+}
+
 wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	wstring classBody=implementationPrologue;
 	wstring registration=registerTemplate;
@@ -106,8 +130,10 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 				registered_fields.insert(toOneImpl(mt,it->second));
 				break;
 			case ONE_TO_MANY:
+				computed_collections.insert(oneToManyImpl(mt,it->second));
 				break;
 			case MANY_TO_MANY:
+				computed_collections.insert(manyToManyImpl(mt,it->second));
 				break;
 			default:
 				assert(false);
@@ -124,7 +150,9 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	replaceAll(L"$className", mt.className, classBody);
 	replaceAll(L"$tableName", mt.tableName, classBody);
 	replaceAll(L"$id", mt.primaryKey, classBody);
-	//classBody += computed_collections;
+	wstring computed_collections_str;
+	for (set<wstring>::iterator it=computed_collections.begin();it!=computed_collections.end();it++) {computed_collections_str+=*it;}
+	classBody += computed_collections_str;
 	return classBody;
 };
 

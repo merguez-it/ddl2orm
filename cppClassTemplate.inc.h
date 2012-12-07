@@ -28,7 +28,7 @@ public: \n\
   TABLE_INIT($className,$tableName)\n";
 
 static const wstring interfaceEpilogue=L"\
-};\n\
+};\n\n\
 #endif";
 
 
@@ -42,8 +42,8 @@ static const wstring implementationPrologue=L"\
 */\n\n\
 #include \"$className.h\"\n\n";
 
-static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",$className::id);\n$fieldsImpl\n};\n";
+static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",$className::id);\n$fieldsImpl\n};\n\n";
 static const wstring fieldTemplate = L"\tfield(\"$fieldName\", &$className::$roleName);\n";
 static const wstring has_oneTemplate = L"\thas_one(\"$fkName\", &$className::$roleName);\n";
-static const wstring has_manyTemplate = L"\thas_many($className,$targetClassName,$roleName,$inverseRoleName);\n";
-static const wstring hmbtTemplate = L"\thas_and_belongs_to_many($className,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";
+static const wstring has_manyTemplate = L"has_many($className,$targetClassName,$roleName,$reverseRoleName);\n";
+static const wstring hmbtTemplate = L"has_and_belongs_to_many($className,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";

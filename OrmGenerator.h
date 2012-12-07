@@ -24,6 +24,8 @@ protected:
 	wstring classImplementation(const MappedTable& mt) const;
 	wstring fieldImpl(const MappedTable& mt,const MemberDesc& field) const;
 	wstring toOneImpl(const MappedTable& mt,const MemberDesc& field) const;
+	wstring oneToManyImpl(const MappedTable& mt,const MemberDesc& field) const;
+	wstring manyToManyImpl(const MappedTable& mt,const MemberDesc& field) const;
 
 	const ObjectModel& model;
 };

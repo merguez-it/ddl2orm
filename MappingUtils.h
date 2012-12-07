@@ -11,9 +11,12 @@
 
 #include <stdlib.h>
 #include <string>
+#include <vector>
 #include <map>
 
 using namespace std;
+
+#define for_each(collection) 
 
 inline void replaceAll(const wstring& pattern, const wstring& word, wstring& target) {
 	size_t pos=0;
@@ -47,6 +50,11 @@ inline wstring toUpper(wstring s) {
 	wstring r = s;
 	transform(r.begin(), r.end(), r.begin(), ::toupper);
 	return r;
+}
+
+inline wstring& operator << (wstring& target , const vector<wstring>& source ) {
+	
+	return target;
 }
 
 #endif
