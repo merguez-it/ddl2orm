@@ -45,7 +45,6 @@ ddl2orm=
 	("INSERT" {ANY} ';')
 }
 .	
-
 TableSpec						
 = 
 (['"']identifier['"']																(. MappedTable mt; mt.tableName=trimQuotes(t->val);	.)
