@@ -297,7 +297,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm ./test/ddl2orm_generated/*.h 2>/dev/null\nrm ./test/ddl2orm_generated/*.cc 2>/dev/null\n./build/Debug/ddl2orm ./test/ddl2orm_sample.sql ./test/ddl2orm_generated";
+			shellScript = "mkdir ./test/ddl2orm_generated 2>/dev/null\nrm ./test/ddl2orm_generated/*.h 2>/dev/null\nrm ./test/ddl2orm_generated/*.cc 2>/dev/null\n./build/Debug/ddl2orm ./test/ddl2orm_sample.sql ./test/ddl2orm_generated";
 		};
 		6BA82DF215031FED00ECD299 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -315,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./cocoDir/coco ./ddl2orm.atg -frames ./cocoDir -o ./cocoGenerated";
+			shellScript = "mkdir ./cocoGenerated 2>/dev/null\n./cocoDir/coco ./ddl2orm.atg -frames ./cocoDir -o ./cocoGenerated";
 		};
 /* End PBXShellScriptBuildPhase section */
 
