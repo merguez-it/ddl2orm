@@ -305,7 +305,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/ddl2cpp.atg",
+				"$(SRCROOT)/ddl2orm.atg",
 			);
 			outputPaths = (
 				"$(SRCROOT)/Parser.cpp",
@@ -315,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir ./cocoGenerated 2>/dev/null\n./cocoDir/coco ./ddl2orm.atg -frames ./cocoDir -o ./cocoGenerated";
+			shellScript = "mkdir ./test/ddl2orm_generated 2>/dev/null\nrm ./test/ddl2orm_generated/*.h 2>/dev/null\nrm ./test/ddl2orm_generated/*.cc 2>/dev/null\nmkdir ./cocoGenerated 2>/dev/null\n./cocoDir/coco ./ddl2orm.atg -frames ./cocoDir -o ./cocoGenerated";
 		};
 /* End PBXShellScriptBuildPhase section */
 
