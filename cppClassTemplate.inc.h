@@ -10,6 +10,9 @@
  *
  */
 
+
+/* Mapped classes interface templates */
+
 static const wstring interfacePrologue=L"\
 /*\n\
 *  $className.h\n\
@@ -32,6 +35,8 @@ static const wstring interfaceEpilogue=L"\
 #endif";
 
 
+/* Mapped classes implementation templates */
+
 static const wstring implementationPrologue=L"\
 /*\n\
 *  $className.cpp\n\
@@ -42,8 +47,8 @@ static const wstring implementationPrologue=L"\
 */\n\n\
 #include \"$className.h\"\n\n";
 
-static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",$className::id);\n$fieldsImpl\n};\n\n";
+static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",&$className::id);\n$fieldsImpl};\n\n";
 static const wstring fieldTemplate = L"\tfield(\"$fieldName\", &$className::$roleName);\n";
 static const wstring has_oneTemplate = L"\thas_one(\"$fkName\", &$className::$roleName);\n";
-static const wstring has_manyTemplate = L"has_many($className,$targetClassName,$roleName,$reverseRoleName);\n";
-static const wstring hmbtTemplate = L"has_and_belongs_to_many($className,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";
+static const wstring has_manyTemplate = L"has_many($sourceClassName,$targetClassName,$roleName,$reverseRoleName);\n";
+static const wstring hmbtTemplate = L"has_and_belongs_to_many($sourceClassName,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";

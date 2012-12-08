@@ -1,0 +1,129 @@
+#include <iostream>
+#include <fstream>
+#include <assert.h>
+#include "MappedTable.h"
+#include "MappingUtils.h"
+#include "ObjectModel.h"
+
+using namespace std;
+
+COMPILER ddl2orm
+
+		ObjectModel *model;
+
+/*--------------------------------------------------------------------------*/
+// IGNORECASE si case sensitive, alors le parser ne sait pas distinguer date (identifier) de DATE (type). shit !
+
+CHARACTERS
+  letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzéàèçùô".
+  digit = "0123456789".
+  quote='\''.
+  cr  = '\r'.
+  lf  = '\n'.
+  tab = '\t'.
+
+TOKENS
+  identifier  = ['"']letter {letter | digit | '_'}['"'].
+  number = digit {digit}.
+  comparator = ">=" | '>' | '<' | "<=" | '=' | "==".
+
+COMMENTS FROM "/*" TO "*/" NESTED
+COMMENTS FROM "//" TO lf
+COMMENTS FROM "--" TO lf
+
+IGNORE cr + lf + tab
+
+PRODUCTIONS
+/*------------------------------------------------------------------------*/
+ddl2orm= 
+{
+	("DROP"{ANY} ';') |	
+	("PRAGMA"{ANY} ';') |
+	("CREATE" (  (["UNIQUE"] "INDEX" {ANY} ';') | ("TABLE" TableSpec) ) ) |
+	("BEGIN" ';') |
+	("COMMIT" ';') |
+	("INSERT" {ANY} ';')
+}
+.	
+
+TableSpec						
+= 
+(['"']identifier['"']																(. MappedTable mt; mt.tableName=trimQuotes(t->val);	.)
+ '('
+	TableItemSpec<mt> 
+	{[','] TableItemSpec<mt>}
+ ')'[';']																			(. 	mt.className=camelize(mt.tableName); 	.)
+																					(.	assert(!mt.className.empty());			.)
+																					(.	model->tables[mt.className]=mt;			.)
+)
+.
+TableItemSpec<MappedTable& mt>														(. wstring role; wstring typeDecl;			.)
+= ( identifier																		(. role=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des champs */			.)		
+	TypeSpec<typeDecl>								
+	ValueSpec<role,mt>
+	[CheckSpec]
+	[("PRIMARY"|"primary")("KEY"|"key") 											(. mt.primaryKey=role; .)
+	 ["AUTOINCREMENT" | "autoincrement" ] 
+	]	
+  )																					(. mt.members[role].roleName=role; .)
+																					(. mt.members[role].type=typeDecl;			.)
+ |(("PRIMARY"|"primary")("KEY"|"key")['('] ['"']identifier['"']						(. mt.primaryKey=trimQuotes(t->val); /* TODO: Injecter les règles de nommage des PK */				.)
+	{','['"']identifier['"']														(. mt.primaryKey=L""; /* ignore composite PK  */	.)
+	}[')'] ["AUTOINCREMENT" | "autoincrement" ]
+  )						
+| ("FOREIGN" "KEY" '(' identifier													(. role=trimQuotes(t->val); wstring column=trimQuotes(t->val);			.)
+																					(. mt.members.erase(column);	/* we don't keep xxxId, rather we model a xxx role*/		.)
+																					(. role = stripSuffix(role);	/* TODO: injecter les règles de nommage des rôles */ .)
+																					(. mt.members[role].roleName=role;  .)
+																					(. mt.members[role].fkName=column;	.)
+																					(. mt.members[role].kind=TO_ONE;	.) 
+	')' "REFERENCES" ['"']identifier['"']											(. mt.members[role].type=camelize(trimQuotes(t->val));	.)
+   '(' ['"']identifier['"']															(. mt.fkToPk[column]=trimQuotes(t->val);								.)
+	')'
+   )											
+.
+
+TypeSpec<wstring &typeDecl> =														(. typeDecl=L"What_The_F_ck";	.)
+	("BOOLEAN")																		(. typeDecl=L"int";				.)
+|	("INTEGER" | "INT" | "int" | "integer")											(. typeDecl=L"int";				.)
+|	("TINYINT"																		(. typeDecl=L"int";				.)
+	|"SMALLINT"																		(. typeDecl=L"int";				.)
+	)							
+|	("TEXT" | "text" | "CHAR" | "char" '('number')' 
+	 | ("VARCHAR"|"varchar")'('number')')											(. typeDecl=L"std::string";		.)
+|	("DOUBLE"| "double" | "BIG" "DECIMAL"| "big" "decimal" | 
+	 "DECIMAL"'('number [','number]')'					
+	)																				(. typeDecl=L"double";			.)
+|	("DATE"  | "date" )																(. typeDecl=L"datetime";		.)
+.
+
+ValueSpec<const wstring& fieldName,MappedTable& mt>  
+																					(. mt.members[fieldName].kind=NULLABLE_DATA;.) // Default is nulable
+=[(("NOT"|"not") ("NULL"|"null"))													(. mt.members[fieldName].kind=DATA;	.)
+ | ("NULL"|"null")]
+ [ ("DEFAULT"|"default") Value]
+.
+
+CheckSpec
+= "CHECK" '('
+	CheckCondition
+ ')'
+.
+
+CheckCondition
+=(	['"']identifier['"'] 
+	((comparator Value) | (("IN"|"in") ValueList) |	("IS" ["NOT"|"not"] ("NULL"|"null") )) 
+	[("OR" | "AND") CheckCondition]
+ )	|
+ ( '(' CheckCondition ')') 
+.
+
+ValueList
+= '(' Value {',' Value} ')'
+.
+
+Value
+= (['+'| '-'] number) | ('\''{ANY}'\'') | "NULL" | identifier
+.
+
+END ddl2orm.

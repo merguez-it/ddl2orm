@@ -21,7 +21,7 @@ int main (int argc, char * const argv[]) {
 	//TODO: Usage...
 	int err=noErr;
 	string fileName = argv[1];
-	string outputDir="../../test/ddl2cpp_generated"; 
+	string outputDir="./"; 
 	if (argc >2) outputDir=argv[2]; 
 	ObjectModel *model=new ObjectModel(fileName,outputDir);
 	err=model->parseDDLtoObjectModel();

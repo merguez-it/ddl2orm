@@ -1,0 +1,498 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
+		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
+		6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */; };
+		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
+		6B99F2D61672B9C300F80AB4 /* liblorm-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B99F2D51672B9C300F80AB4 /* liblorm-static.a */; };
+		6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B99F3921672F06E00F80AB4 /* main_test.cpp */; };
+		6BC3A0F316735C62007BE468 /* Book.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0EF16735C62007BE468 /* Book.cc */; };
+		6BC3A0F416735C62007BE468 /* Person.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0F116735C62007BE468 /* Person.cc */; };
+		6BC62AD515089359002A562C /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD115089359002A562C /* Parser.cpp */; };
+		6BC62AD615089359002A562C /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD315089359002A562C /* Scanner.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6B99F4191672FCFA00F80AB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
+			remoteInfo = ddl2orm;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6B1849B6150F395200E5C7DA /* MappedTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappedTable.h; sourceTree = "<group>"; };
+		6B1849B7150F395200E5C7DA /* MappedTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MappedTable.cpp; sourceTree = "<group>"; };
+		6B1849E6150FC72400E5C7DA /* ObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModel.h; sourceTree = "<group>"; };
+		6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModel.cpp; sourceTree = "<group>"; };
+		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
+		6B72829C166EDAE300360BA1 /* OrmGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrmGenerator.h; sourceTree = "<group>"; };
+		6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrmGenerator.cpp; sourceTree = "<group>"; };
+		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
+		6B8EAEC314FEBE560023899E /* ddl2orm.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2orm.atg; sourceTree = "<group>"; };
+		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		6B99F2D51672B9C300F80AB4 /* liblorm-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liblorm-static.a"; path = "/Perso/lorm/build/src/liblorm-static.a"; sourceTree = "<absolute>"; };
+		6B99F3921672F06E00F80AB4 /* main_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_test.cpp; path = test/main_test.cpp; sourceTree = "<group>"; };
+		6B99F3CF1672FA5600F80AB4 /* test-borrowing-books */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-borrowing-books"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B99F3E31672FB5700F80AB4 /* ddl2orm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ddl2orm; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B99F3FB1672FC9B00F80AB4 /* any.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = any.h; sourceTree = "<group>"; };
+		6B99F3FC1672FC9B00F80AB4 /* collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collection.h; sourceTree = "<group>"; };
+		6B99F3FD1672FC9B00F80AB4 /* column.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = column.h; sourceTree = "<group>"; };
+		6B99F3FE1672FC9B00F80AB4 /* datetime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datetime.h; sourceTree = "<group>"; };
+		6B99F3FF1672FC9B00F80AB4 /* db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
+		6B99F4011672FC9B00F80AB4 /* dbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbi.h; sourceTree = "<group>"; };
+		6B99F4021672FC9B00F80AB4 /* mysql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql.h; sourceTree = "<group>"; };
+		6B99F4031672FC9B00F80AB4 /* pg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pg.h; sourceTree = "<group>"; };
+		6B99F4041672FC9B00F80AB4 /* sqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite.h; sourceTree = "<group>"; };
+		6B99F4051672FC9B00F80AB4 /* lorm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lorm.h; sourceTree = "<group>"; };
+		6B99F4061672FC9B00F80AB4 /* macro_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macro_utils.h; sourceTree = "<group>"; };
+		6B99F4071672FC9B00F80AB4 /* reference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference.h; sourceTree = "<group>"; };
+		6B99F4081672FC9B00F80AB4 /* singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleton.h; sourceTree = "<group>"; };
+		6B99F4091672FC9B00F80AB4 /* table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = table.h; sourceTree = "<group>"; };
+		6B99F40A1672FC9B00F80AB4 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		6B99F40B1672FC9B00F80AB4 /* uri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uri.h; sourceTree = "<group>"; };
+		6B99F40C1672FC9B00F80AB4 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		6B99F40D1672FC9B00F80AB4 /* vector_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_util.h; sourceTree = "<group>"; };
+		6BB71D7116725B3900335EBB /* ddl2orm_sample.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ddl2orm_sample.sql; path = test/ddl2orm_sample.sql; sourceTree = "<group>"; };
+		6BC3A0EF16735C62007BE468 /* Book.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Book.cc; path = test/ddl2orm_generated/Book.cc; sourceTree = "<group>"; };
+		6BC3A0F016735C62007BE468 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Book.h; path = test/ddl2orm_generated/Book.h; sourceTree = "<group>"; };
+		6BC3A0F116735C62007BE468 /* Person.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Person.cc; path = test/ddl2orm_generated/Person.cc; sourceTree = "<group>"; };
+		6BC3A0F216735C62007BE468 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = test/ddl2orm_generated/Person.h; sourceTree = "<group>"; };
+		6BC62AD115089359002A562C /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = cocoGenerated/Parser.cpp; sourceTree = "<group>"; };
+		6BC62AD215089359002A562C /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = cocoGenerated/Parser.h; sourceTree = "<group>"; };
+		6BC62AD315089359002A562C /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = cocoGenerated/Scanner.cpp; sourceTree = "<group>"; };
+		6BC62AD415089359002A562C /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = cocoGenerated/Scanner.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B99F2CE1672B96300F80AB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B99F2D61672B9C300F80AB4 /* liblorm-static.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* ddl2cpp */ = {
+			isa = PBXGroup;
+			children = (
+				6B99F3971672F6FC00F80AB4 /* lorm */,
+				6BA82F081503959F00ECD299 /* test */,
+				6B8EAEC314FEBE560023899E /* ddl2orm.atg */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = ddl2cpp;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6B184A0415108AD700E5C7DA /* headers */,
+				6BC62AD015089339002A562C /* cocoGenerated */,
+				6B8EAECD14FED55B0023899E /* main.cpp */,
+				6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */,
+				6B1849B7150F395200E5C7DA /* MappedTable.cpp */,
+				6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B99F3CF1672FA5600F80AB4 /* test-borrowing-books */,
+				6B99F3E31672FB5700F80AB4 /* ddl2orm */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B184A0415108AD700E5C7DA /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */,
+				6B1849E6150FC72400E5C7DA /* ObjectModel.h */,
+				6B1849B6150F395200E5C7DA /* MappedTable.h */,
+				6B184A201510D13B00E5C7DA /* MappingUtils.h */,
+				6B72829C166EDAE300360BA1 /* OrmGenerator.h */,
+			);
+			name = headers;
+			sourceTree = "<group>";
+		};
+		6B99F3971672F6FC00F80AB4 /* lorm */ = {
+			isa = PBXGroup;
+			children = (
+				6B99F3FA1672FC9B00F80AB4 /* include */,
+				6B99F2D51672B9C300F80AB4 /* liblorm-static.a */,
+			);
+			name = lorm;
+			sourceTree = "<group>";
+		};
+		6B99F3FA1672FC9B00F80AB4 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				6B99F3FB1672FC9B00F80AB4 /* any.h */,
+				6B99F3FC1672FC9B00F80AB4 /* collection.h */,
+				6B99F3FD1672FC9B00F80AB4 /* column.h */,
+				6B99F3FE1672FC9B00F80AB4 /* datetime.h */,
+				6B99F3FF1672FC9B00F80AB4 /* db.h */,
+				6B99F4001672FC9B00F80AB4 /* dbi */,
+				6B99F4051672FC9B00F80AB4 /* lorm.h */,
+				6B99F4061672FC9B00F80AB4 /* macro_utils.h */,
+				6B99F4071672FC9B00F80AB4 /* reference.h */,
+				6B99F4081672FC9B00F80AB4 /* singleton.h */,
+				6B99F4091672FC9B00F80AB4 /* table.h */,
+				6B99F40A1672FC9B00F80AB4 /* types.h */,
+				6B99F40B1672FC9B00F80AB4 /* uri.h */,
+				6B99F40C1672FC9B00F80AB4 /* util.h */,
+				6B99F40D1672FC9B00F80AB4 /* vector_util.h */,
+			);
+			name = include;
+			path = test/liblorm/include;
+			sourceTree = "<group>";
+		};
+		6B99F4001672FC9B00F80AB4 /* dbi */ = {
+			isa = PBXGroup;
+			children = (
+				6B99F4011672FC9B00F80AB4 /* dbi.h */,
+				6B99F4021672FC9B00F80AB4 /* mysql.h */,
+				6B99F4031672FC9B00F80AB4 /* pg.h */,
+				6B99F4041672FC9B00F80AB4 /* sqlite.h */,
+			);
+			path = dbi;
+			sourceTree = "<group>";
+		};
+		6BA82F081503959F00ECD299 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				6BC3A0EF16735C62007BE468 /* Book.cc */,
+				6BC3A0F016735C62007BE468 /* Book.h */,
+				6BC3A0F116735C62007BE468 /* Person.cc */,
+				6BC3A0F216735C62007BE468 /* Person.h */,
+				6B99F3921672F06E00F80AB4 /* main_test.cpp */,
+				6BB71D7116725B3900335EBB /* ddl2orm_sample.sql */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		6BC62AD015089339002A562C /* cocoGenerated */ = {
+			isa = PBXGroup;
+			children = (
+				6BC62AD115089359002A562C /* Parser.cpp */,
+				6BC62AD215089359002A562C /* Parser.h */,
+				6BC62AD315089359002A562C /* Scanner.cpp */,
+				6BC62AD415089359002A562C /* Scanner.h */,
+			);
+			name = cocoGenerated;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B99F2CF1672B96300F80AB4 /* test-borrowing-books */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B99F2D41672B98300F80AB4 /* Build configuration list for PBXNativeTarget "test-borrowing-books" */;
+			buildPhases = (
+				6B99F41F1672FE0700F80AB4 /* ShellScript */,
+				6B99F2CD1672B96300F80AB4 /* Sources */,
+				6B99F2CE1672B96300F80AB4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B99F41A1672FCFA00F80AB4 /* PBXTargetDependency */,
+			);
+			name = "test-borrowing-books";
+			productName = "test-borrowing-books";
+			productReference = 6B99F3CF1672FA5600F80AB4 /* test-borrowing-books */;
+			productType = "com.apple.product-type.tool";
+		};
+		8DD76F620486A84900D96B5E /* ddl2orm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "ddl2orm" */;
+			buildPhases = (
+				6BA82DF215031FED00ECD299 /* ShellScript */,
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ddl2orm;
+			productInstallPath = "$(HOME)/bin";
+			productName = ddl2cpp;
+			productReference = 6B99F3E31672FB5700F80AB4 /* ddl2orm */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Vidal;
+			};
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ddl2orm" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* ddl2cpp */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* ddl2orm */,
+				6B99F2CF1672B96300F80AB4 /* test-borrowing-books */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6B99F41F1672FE0700F80AB4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm ./test/ddl2orm_generated/*.h 2>/dev/null\nrm ./test/ddl2orm_generated/*.cc 2>/dev/null\n./build/Debug/ddl2orm ./test/ddl2orm_sample.sql ./test/ddl2orm_generated";
+		};
+		6BA82DF215031FED00ECD299 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/ddl2cpp.atg",
+			);
+			outputPaths = (
+				"$(SRCROOT)/Parser.cpp",
+				"$(SRCROOT)/Parser.h",
+				"$(SRCROOT)/Scanner.h",
+				"$(SRCROOT)/Scanner.cpp",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./cocoDir/coco ./ddl2orm.atg -frames ./cocoDir -o ./cocoGenerated";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B99F2CD1672B96300F80AB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */,
+				6BC3A0F316735C62007BE468 /* Book.cc in Sources */,
+				6BC3A0F416735C62007BE468 /* Person.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B8EAECE14FED55B0023899E /* main.cpp in Sources */,
+				6BC62AD515089359002A562C /* Parser.cpp in Sources */,
+				6BC62AD615089359002A562C /* Scanner.cpp in Sources */,
+				6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */,
+				6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */,
+				6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B99F41A1672FCFA00F80AB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DD76F620486A84900D96B5E /* ddl2orm */;
+			targetProxy = 6B99F4191672FCFA00F80AB4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = ddl2orm;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = ddl2cpp;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
+			};
+			name = Release;
+		};
+		6B99F2D21672B96300F80AB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = "test/liblorm/include/**";
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/mysql/lib/**",
+					"\"$(SRCROOT)/test/liblorm\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					/usr/local/mysql/lib/libmysqlclient.a,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "test-borrowing-books";
+			};
+			name = Debug;
+		};
+		6B99F2D31672B96300F80AB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Perso/lorm/build/src,
+					"\"$(SRCROOT)/test/liblorm\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "test-borrowing-books";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "ddl2orm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ddl2orm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B99F2D41672B98300F80AB4 /* Build configuration list for PBXNativeTarget "test-borrowing-books" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B99F2D21672B96300F80AB4 /* Debug */,
+				6B99F2D31672B96300F80AB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

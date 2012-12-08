@@ -46,11 +46,11 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 			virtual_member.kind=ONE_TO_MANY;
 			virtual_member.type=mt.className;
 			virtual_member.reverseRoleName=fieldIt->first;
-			wstring generatedName=targetMappedTable.add_to_many_role(mt.className, virtual_member); //TODO: Inject one to-many role name as it may be crappy
-			if (generatedName!=mt.className+L"s") { 
-				wcout << L"[WARNING] One-to-many generated role: " << mt.className <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
+			wstring generatedName=targetMappedTable.add_to_many_role(mt.tableName, virtual_member); //TODO: Inject one to-many role name as it may be crappy
+			if (generatedName!=mt.tableName+L"s") { 
+				wcout << L"[WARNING] One-to-many generated role: " << mt.tableName <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
 			}
-		}
+		} 
 	}
 }
 
@@ -68,7 +68,7 @@ std::pair<MappedTable, MappedTable> ObjectModel::getLinkedClasses(const MappedTa
 // Given an association table (i.e: "many-to-many" link table), populates MappedTables matching the ends of the association with member-specification  
 // used to navigate that association from either of its class-ends.
 // Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships. 
-// 					 "bidirectional_association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
+// 		     "bidirectional_association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
 void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
 	assert(bidirectional_association.isPureBinaryAssociation());
 	pair<MemberDesc,MemberDesc> roles = bidirectional_association.getLinkedRoles();
@@ -79,6 +79,8 @@ void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
 	assert(tables.count(role2.type)==1);
 	role1.kind=MANY_TO_MANY;
 	role2.kind=MANY_TO_MANY;
+	role1.linkClass=bidirectional_association.tableName;
+	role2.linkClass=bidirectional_association.tableName;
 	wstring generatedName=tables[role2.type].add_to_many_role(role1.roleName,role1);
 	if (generatedName!=wstring(roles.first.roleName+L"s")) { 
 		wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;

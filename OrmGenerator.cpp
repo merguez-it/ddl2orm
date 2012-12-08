@@ -31,13 +31,15 @@ wstring OrmGenerator::memberDeclaration(const MappedTable& mt, const wstring& fi
 	return result;
 }
 
-wstring OrmGenerator::forwardDeclarations(const MappedTable& mt) const {
+// Utility that produces a string aggregating all classes which mt depends on, 
+// surrounded by a given prefix and suffix. (used for includes and forward class decls.)
+wstring formatRoleClasses(const wstring &prefix, const MappedTable& mt, const wstring &suffix ) {
 	wstring result;
 	vector<wstring> already_declared;
-	already_declared.push_back(L"class " + mt.className + L";\n"); // Do not forward-declare *this* mapped class
+	already_declared.push_back(prefix + mt.className + suffix); // Do not forward-declare *this* mapped class
 	for (FieldIt it = mt.members.begin(); it != mt.members.end(); it++) {
 		if (mt.isRole(it->first)) {					
-			wstring forward_declaration = L"class " + it->second.type + L";\n";
+			wstring forward_declaration = prefix + it->second.type + suffix;
 			if (find(already_declared.begin(), already_declared.end(), forward_declaration) == already_declared.end()) {
 				already_declared.push_back(forward_declaration);
 				result += forward_declaration;
@@ -45,6 +47,14 @@ wstring OrmGenerator::forwardDeclarations(const MappedTable& mt) const {
 		}
 	} 
 	return result;
+}
+
+wstring OrmGenerator::forwardDeclarations(const MappedTable& mt) const {
+	return formatRoleClasses(L"class ",mt,L";\n");
+}
+
+wstring OrmGenerator::implementationIncludes(const MappedTable& mt) const {
+	return formatRoleClasses(L"#include \"",mt,L".h\";\n");
 }
 
 wstring OrmGenerator::classHeader(const MappedTable& mt) const {
@@ -98,25 +108,36 @@ wstring OrmGenerator::oneToManyImpl(const MappedTable& mt,const MemberDesc& fiel
 	if (!toManyClass.isAssociationClass()) { // TODO Map association classes as soon as lorm support it.    
 		MemberDesc reverseRole=mt.members.find(field.roleName)->second;
 		result=has_manyTemplate;
-		replaceAll(L"$className", mt.className, result);
+		replaceAll(L"$sourceClassName", mt.className, result);
 		replaceAll(L"$roleName", field.roleName, result);
 		replaceAll(L"$targetClassName", toManyClass.className, result);
-		toManyClass.members[field.roleName];
 		replaceAll(L"$reverseRoleName",field.reverseRoleName,result);		
 	}
 	return result;
 }
 
-wstring OrmGenerator::manyToManyImpl(const MappedTable& mt,const MemberDesc& field) const {
+wstring OrmGenerator::manyToManyImpl(const MappedTable& mt,const MemberDesc& member) const {
+	//has_and_belongs_to_many($className,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";
+  //has_and_belongs_to_many(Person,Book,borrowed_books,"borrows","borrower_id","borrowed_book_id");
 	wstring result=hmbtTemplate;
-//	replaceAll(L"$className", mt.className, result);
-//	replaceAll(L"$roleName", field.roleName, result);
-//	replaceAll(L"$fkName", field.fkName, result);
+	assert(model.tables.count(member.linkClass)==1);
+	MappedTable association=model.tables.find(member.linkClass)->second;
+	assert(association.isAssociationClass() || association.isPureBinaryAssociation());
+	pair < MemberDesc , MemberDesc > roles = association.getLinkedRoles();
+	MemberDesc& targetRole = member.fkName == roles.first.fkName ? roles.first : roles.second;
+	MemberDesc& sourceRole = &targetRole == &roles.first ? roles.second : roles.first;
+	replaceAll(L"$sourceClassName", mt.className, result);
+	replaceAll(L"$targetClassName" , targetRole.type , result);
+	replaceAll(L"$roleName" , member.roleName , result);
+	replaceAll(L"$linkTable" ,association.tableName , result);
+	replaceAll(L"$sourceFK" , sourceRole.fkName , result);
+	replaceAll(L"$targetFK" , targetRole.fkName , result);
 	return result;
 }
 
 wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	wstring classBody=implementationPrologue;
+	classBody+=implementationIncludes(mt);
 	wstring registration=registerTemplate;
 	set<wstring> registered_fields,computed_collections;
 	for (FieldIt it = mt.members.begin(); it != mt.members.end(); it++) {
@@ -124,7 +145,9 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 		switch (memberKind) {
 			case DATA:
 			case NULLABLE_DATA:
-				registered_fields.insert(fieldImpl(mt,it->second));
+				if (mt.primaryKey!=it->first) {
+					registered_fields.insert(fieldImpl(mt,it->second)); 
+				}
 				break;
 			case TO_ONE:
 				registered_fields.insert(toOneImpl(mt,it->second));
@@ -135,14 +158,9 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 			case MANY_TO_MANY:
 				computed_collections.insert(manyToManyImpl(mt,it->second));
 				break;
-			default:
-				assert(false);
-				break;
+			default: assert(false);
 		}
 	}
-//	wstringstream sstream;
-//	ostream_iterator<wstring> out_it(sstream);
-//	copy(registered_fields.begin();it!=registered_fields.end(), out_it);
 	wstring registered_fields_str;
 	for (set<wstring>::iterator it=registered_fields.begin();it!=registered_fields.end();it++) {registered_fields_str+=*it;}
 	replaceAll(L"$fieldsImpl",registered_fields_str, registration);
@@ -156,26 +174,22 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	return classBody;
 };
 
-
-
 int OrmGenerator::generateFiles() {
 	int result=0;
 	for (MappedTables::const_iterator it=model.tables.begin(); it!=model.tables.end(); it++) {
 		MappedTable mt=it->second;
 		string className=string(mt.className.begin(),mt.className.end());
 		assert(!className.empty());
-		if (!mt.isPureBinaryAssociation()) { // Mapped using "many-to-many" roles in respective end-classes.
+		if (!mt.isPureBinaryAssociation()) { // binary-associations are mapped using "many-to-many" roles in respective end-classes.
 			if (!mt.isAssociationClass()) {
-				string path_interface=model.outputDir+PATH_SEPARATOR+className+".h"; //TODO: DRY !
-				string path_implementation=model.outputDir+PATH_SEPARATOR+className+".cpp";
-
+				string path_interface=model.outputDir+PATH_SEPARATOR+className+".h"; 
+				string path_implementation=model.outputDir+PATH_SEPARATOR+className+".cc";
 				wofstream out_interface(path_interface.c_str()); //TODO: DRY !
 				wofstream out_implementation(path_implementation.c_str());
-
 				if (out_interface.is_open() && out_implementation.is_open())	{	
 					out_interface <<	classHeader(mt); //CANADA: DRY !
 					out_implementation << classImplementation(mt);
-					cout << className << ".h and .cpp generated ( "<< mt.members.size() << " members mapped )" << endl;
+					cout << className << ".h and .cc generated ( "<< mt.members.size() << " members mapped )" << endl;
 				}
 				if (out_interface.fail() || out_implementation.fail() ) {
 					cout << "I/O error while generating " << className << endl;

@@ -7,3 +7,4 @@ test/*.hxx
 .DS_Store
 test/ddl2cpp_generated/
 test/private/
+*.old

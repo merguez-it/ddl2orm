@@ -1,10 +1,10 @@
 TODO:
-- les includes des classes foreign
+- les includes des classes foreign [DONE!]
 - les operateurs "out"
-- les relations n-n, et leur inverse
-- les inveres "to-many" pour les "to-one"
+- les relations n-n, et leur inverse [DONE!]
+- les inveres "to-many" pour les "to-one" [DONE!]
 - générer le script de génération des classes ODB à partir des interfaces générées
-- les classes de test
+- les classes de test [WONTFIX !]
 - les enums mappées:injection d'une "mappe" <Classe.champ,énumération>*, pour substituer le type "énumération" à "int")
 - Inclure la date de génération dans les fichiers
 - Mapping des classes d'associations porteuses dinfo (+/-32 tables)

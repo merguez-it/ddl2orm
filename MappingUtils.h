@@ -52,6 +52,18 @@ inline wstring toUpper(wstring s) {
 	return r;
 }
 
+// returns keyName without any useless crappy suffix (if present): id or _id, case insensitive.
+inline wstring stripSuffix(wstring keyName) { 
+	int length = keyName.length();
+	wstring result=keyName;
+	if (toUpper(keyName).find(toUpper(L"_ID")) == length-3) {
+		result= keyName.substr(0,length-3);
+	} else if (toUpper(keyName).find(toUpper(L"ID")) == length-2) {
+		result= keyName.substr(0,length-2);
+	}
+	return result;
+}
+
 inline wstring& operator << (wstring& target , const vector<wstring>& source ) {
 	
 	return target;
