@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string>
 #include <map>
+#include <set>
 #include <vector>
 using namespace std;
 
@@ -118,7 +119,11 @@ public:
 	// Returns true if the mapped table represents an association class
 	// i.e: contains data and no single PK.
 	// Skipped from generation in the current version. TODO: Implement association-classes
-	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty() && fkToPk.size()==2;} 	
+	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty() && fkToPk.size()==2;}
+  
+  // Returns the set of classes which this MappedTable depends on.
+  set<wstring> getClassDependencies() const;
+
 	
 protected:
 	

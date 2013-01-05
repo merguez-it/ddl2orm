@@ -10,8 +10,8 @@
 		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
 		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
 		6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */; };
+		6B89A3CB16988D7C0060B209 /* liblorm-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B89A3CA16988D7C0060B209 /* liblorm-static.a */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
-		6B99F2D61672B9C300F80AB4 /* liblorm-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B99F2D51672B9C300F80AB4 /* liblorm-static.a */; };
 		6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B99F3921672F06E00F80AB4 /* main_test.cpp */; };
 		6BC3A0F316735C62007BE468 /* Book.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0EF16735C62007BE468 /* Book.cc */; };
 		6BC3A0F416735C62007BE468 /* Person.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0F116735C62007BE468 /* Person.cc */; };
@@ -32,12 +32,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F690486A84900D96B5E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -49,10 +49,10 @@
 		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
 		6B72829C166EDAE300360BA1 /* OrmGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrmGenerator.h; sourceTree = "<group>"; };
 		6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrmGenerator.cpp; sourceTree = "<group>"; };
+		6B89A3CA16988D7C0060B209 /* liblorm-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liblorm-static.a"; path = "test/liblorm/liblorm-static.a"; sourceTree = "<group>"; };
 		6B8C9F4E1500AFEE000884D2 /* cppClassTemplate.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppClassTemplate.inc.h; sourceTree = "<group>"; };
 		6B8EAEC314FEBE560023899E /* ddl2orm.atg */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ddl2orm.atg; sourceTree = "<group>"; };
 		6B8EAECD14FED55B0023899E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6B99F2D51672B9C300F80AB4 /* liblorm-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liblorm-static.a"; path = "/Perso/lorm/build/src/liblorm-static.a"; sourceTree = "<absolute>"; };
 		6B99F3921672F06E00F80AB4 /* main_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_test.cpp; path = test/main_test.cpp; sourceTree = "<group>"; };
 		6B99F3CF1672FA5600F80AB4 /* test-borrowing-books */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-borrowing-books"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B99F3E31672FB5700F80AB4 /* ddl2orm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ddl2orm; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B99F2D61672B9C300F80AB4 /* liblorm-static.a in Frameworks */,
+				6B89A3CB16988D7C0060B209 /* liblorm-static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,8 +153,8 @@
 		6B99F3971672F6FC00F80AB4 /* lorm */ = {
 			isa = PBXGroup;
 			children = (
+				6B89A3CA16988D7C0060B209 /* liblorm-static.a */,
 				6B99F3FA1672FC9B00F80AB4 /* include */,
-				6B99F2D51672B9C300F80AB4 /* liblorm-static.a */,
 			);
 			name = lorm;
 			sourceTree = "<group>";
@@ -364,7 +364,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/test/liblorm\"",
+				);
 				PRODUCT_NAME = ddl2orm;
+				SYMROOT = ./build;
 			};
 			name = Debug;
 		};
@@ -375,7 +380,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = ddl2cpp;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/test/liblorm\"",
+				);
+				PRODUCT_NAME = ddl2orm;
+				SYMROOT = ./build;
 			};
 			name = Release;
 		};
@@ -385,11 +395,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
 			};
 			name = Debug;
@@ -399,10 +411,12 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/cocoGenerated";
 			};
 			name = Release;
@@ -431,6 +445,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "test-borrowing-books";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -458,6 +473,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "test-borrowing-books";
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;

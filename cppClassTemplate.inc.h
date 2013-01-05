@@ -45,7 +45,7 @@ static const wstring implementationPrologue=L"\
 *  Copyleft 2012 Merguez-it.\n\
 *\n\
 */\n\n\
-#include \"$className.h\"\n\n";
+#include \"$className.h\"\n";
 
 static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",&$className::id);\n$fieldsImpl};\n\n";
 static const wstring fieldTemplate = L"\tfield(\"$fieldName\", &$className::$roleName);\n";

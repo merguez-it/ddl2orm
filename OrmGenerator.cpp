@@ -34,17 +34,12 @@ wstring OrmGenerator::memberDeclaration(const MappedTable& mt, const wstring& fi
 // Utility that produces a string aggregating all classes which mt depends on, 
 // surrounded by a given prefix and suffix. (used for includes and forward class decls.)
 wstring formatRoleClasses(const wstring &prefix, const MappedTable& mt, const wstring &suffix ) {
-	wstring result;
-	vector<wstring> already_declared;
-	already_declared.push_back(prefix + mt.className + suffix); // Do not forward-declare *this* mapped class
-	for (FieldIt it = mt.members.begin(); it != mt.members.end(); it++) {
-		if (mt.isRole(it->first)) {					
-			wstring forward_declaration = prefix + it->second.type + suffix;
-			if (find(already_declared.begin(), already_declared.end(), forward_declaration) == already_declared.end()) {
-				already_declared.push_back(forward_declaration);
-				result += forward_declaration;
-			}
-		}
+	set<wstring> dependencies;
+  wstring result;
+  dependencies= mt.getClassDependencies();
+	for (set<wstring>::iterator it = dependencies.begin(); it != dependencies.end(); it++) {
+			wstring forward_declaration = prefix + *it + suffix;
+      result += forward_declaration;
 	} 
 	return result;
 }
@@ -54,7 +49,7 @@ wstring OrmGenerator::forwardDeclarations(const MappedTable& mt) const {
 }
 
 wstring OrmGenerator::implementationIncludes(const MappedTable& mt) const {
-	return formatRoleClasses(L"#include \"",mt,L".h\";\n");
+	return formatRoleClasses(L"#include \"",mt,L".h\"\n");
 }
 
 wstring OrmGenerator::classHeader(const MappedTable& mt) const {
@@ -137,7 +132,7 @@ wstring OrmGenerator::manyToManyImpl(const MappedTable& mt,const MemberDesc& mem
 
 wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	wstring classBody=implementationPrologue;
-	classBody+=implementationIncludes(mt);
+	classBody+=implementationIncludes(mt) + + L"\n" ;
 	wstring registration=registerTemplate;
 	set<wstring> registered_fields,computed_collections;
 	for (FieldIt it = mt.members.begin(); it != mt.members.end(); it++) {

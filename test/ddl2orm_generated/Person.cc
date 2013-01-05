@@ -7,8 +7,8 @@
 */
 
 #include "Person.h"
+#include "Book.h"
 
-#include "Book.h";
 REGISTER_TABLE(Person) {
 	identity("person_id",&Person::id);
 	field("name", &Person::name);

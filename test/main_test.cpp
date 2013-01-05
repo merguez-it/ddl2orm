@@ -38,8 +38,8 @@ int main (int argc, char * const argv[]) {
 	Lorm::getInstance()->execute(buffer.str());
 	// Go !
 	Person who;
-	collection<Person> everyone = who.find();
-	for ( collection<Person>::iterator p=everyone.begin() ; p!=everyone.end() ; p++ )	{
+	collection<Person> *everyone = who.find();
+	for ( collection<Person>::iterator p=everyone->begin() ; p!=everyone->end() ; p++ )	{
 		cout << p->name << " ( with id " << p->id << ") owns " << p->books().size() << " book(s)" << endl;
 		cout << "and  borrowed " << p->borrowed_books().size() << " book(s)." << endl << endl;
 	}

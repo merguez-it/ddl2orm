@@ -51,6 +51,17 @@ std::pair<MemberDesc , MemberDesc> MappedTable::getLinkedRoles() const {
 	return pair<MemberDesc , MemberDesc >(role1,role2) ;
 }
 
+// Returns the set of classes which this MappedTable depends on.
+set<wstring> MappedTable::getClassDependencies() const {
+	set<wstring> result;
+	for (FieldIt it = members.begin(); it != members.end(); it++) {
+		if (isRole(it->first)) {
+      result.insert(it->second.type);
+		}
+	}
+	return result;
+}
+
 wstring MappedTable::add_to_many_role(const wstring& roleName, MemberDesc &role) {
 	wstring result=roleName + L"s"; // TODO: Traiter les injections de nom des rôles "to-many" - ou au moins pluralize
 	int i=0;
