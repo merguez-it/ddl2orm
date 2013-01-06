@@ -15,6 +15,7 @@
 
 #include "Book.h"
 #include "Person.h"
+#include "Borrows.h"
 
 #define BUILD_BOOK(book)\
 Book book;\
@@ -41,7 +42,8 @@ int main (int argc, char * const argv[]) {
 	collection<Person> *everyone = who.find();
 	for ( collection<Person>::iterator p=everyone->begin() ; p!=everyone->end() ; p++ )	{
 		cout << p->name << " ( with id " << p->id << ") owns " << p->books().size() << " book(s)" << endl;
-		cout << "and  borrowed " << p->borrowed_books().size() << " book(s)." << endl << endl;
+		cout << "and  borrowed " << p->borrows().size() << " book(s)." << endl;
+    cout << "he / she liked " << p->liked_books().size() << " book(s)." << endl << endl;
 	}
 	Lorm::disconnect();
 }

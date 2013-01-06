@@ -32,7 +32,7 @@ struct MemberDesc {
 	// Name of the attribute or role, using conventions ( == key of "MemberMap", see below)
 	wstring roleName; 
 	
-	// Kind of thius member
+	// Kind of this member
 	MemberKind kind;
 	
 	//Simple type or mapping class for this role

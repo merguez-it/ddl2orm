@@ -8,11 +8,13 @@
 
 #include "Person.h"
 #include "Book.h"
+#include "Borrows.h"
 
 REGISTER_TABLE(Person) {
 	identity("person_id",&Person::id);
 	field("name", &Person::name);
 };
 
-has_and_belongs_to_many(Person,Book,borrowed_books,"borrows","borrower_id","borrowed_book_id");
+has_and_belongs_to_many(Person,Book,liked_books,"likes","happy_reader_id","liked_book_id");
 has_many(Person,Book,books,owner);
+has_many(Person,Borrows,borrows,borrower);

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8DD76F620486A84900D96B5E"
-               BuildableName = "ddl2cpp"
+               BuildableName = "ddl2orm"
                BlueprintName = "ddl2orm"
                ReferencedContainer = "container:ddl2orm.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8DD76F620486A84900D96B5E"
-            BuildableName = "ddl2cpp"
+            BuildableName = "ddl2orm"
             BlueprintName = "ddl2orm"
             ReferencedContainer = "container:ddl2orm.xcodeproj">
          </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8DD76F620486A84900D96B5E"
-            BuildableName = "ddl2cpp"
+            BuildableName = "ddl2orm"
             BlueprintName = "ddl2orm"
             ReferencedContainer = "container:ddl2orm.xcodeproj">
          </BuildableReference>
@@ -81,7 +81,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8DD76F620486A84900D96B5E"
-            BuildableName = "ddl2cpp"
+            BuildableName = "ddl2orm"
             BlueprintName = "ddl2orm"
             ReferencedContainer = "container:ddl2orm.xcodeproj">
          </BuildableReference>

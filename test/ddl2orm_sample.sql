@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS "borrows";
 CREATE TABLE "borrows" (
 "borrowed_book_id" INTEGER NOT NULL,
 "borrower_id" INTEGER NOT NULL,
+"date_of_borrow" DATE NOT NULL,
 FOREIGN KEY ("borrowed_book_id") REFERENCES "book" ("book_id"),
 FOREIGN KEY ("borrower_id") REFERENCES "person" ("person_id")
 );
@@ -40,16 +41,39 @@ FOREIGN KEY ("borrower_id") REFERENCES "person" ("person_id")
 --  Records of "borrows"
 -- ----------------------------
 BEGIN;
-INSERT INTO "borrows" VALUES (1, 1);
-INSERT INTO "borrows" VALUES (1, 5);
-INSERT INTO "borrows" VALUES (2, 4);
-INSERT INTO "borrows" VALUES (2, 5);
-INSERT INTO "borrows" VALUES (6, 3);
-INSERT INTO "borrows" VALUES (6, 2);
-INSERT INTO "borrows" VALUES (6, 4);
-INSERT INTO "borrows" VALUES (4, 2);
-INSERT INTO "borrows" VALUES (7, 1);
+INSERT INTO "borrows" VALUES (1, 1,'2012-05-06');
+INSERT INTO "borrows" VALUES (1, 5,'1994-06-25');
+INSERT INTO "borrows" VALUES (2, 4,'1967-12-17');
+INSERT INTO "borrows" VALUES (2, 5,'2012-06-21');
+INSERT INTO "borrows" VALUES (6, 3,'2005-07-06');
+INSERT INTO "borrows" VALUES (6, 2,'2013-10-14');
+INSERT INTO "borrows" VALUES (6, 4,'2010-08-20');
+INSERT INTO "borrows" VALUES (4, 2,'1964-04-11');
+INSERT INTO "borrows" VALUES (7, 1,'2004-11-11');
 COMMIT;
+
+-- ----------------------------
+--  Table structure for "likes"
+-- ----------------------------
+DROP TABLE IF EXISTS "likes";
+CREATE TABLE "likes" (
+"liked_book_id" INTEGER NOT NULL,
+"happy_reader_id" INTEGER NOT NULL,
+FOREIGN KEY ("liked_book_id") REFERENCES "book" ("book_id"),
+FOREIGN KEY ("happy_reader_id") REFERENCES "person" ("person_id")
+);
+
+-- ----------------------------
+--  Records of "likes"
+-- ----------------------------
+BEGIN;
+INSERT INTO "likes" VALUES(2,4);
+INSERT INTO "likes" VALUES(2,5);
+INSERT INTO "likes" VALUES(6,3);
+INSERT INTO "likes" VALUES(6,2);
+INSERT INTO "likes" VALUES(6,4);
+COMMIT;
+
 
 -- ----------------------------
 --  Table structure for "person"

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
 		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
+		6B649F87169985BC003B9D39 /* Borrows.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B649F85169985BC003B9D39 /* Borrows.cc */; };
 		6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */; };
 		6B89A3CB16988D7C0060B209 /* liblorm-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B89A3CA16988D7C0060B209 /* liblorm-static.a */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
@@ -47,6 +48,8 @@
 		6B1849E6150FC72400E5C7DA /* ObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModel.h; sourceTree = "<group>"; };
 		6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModel.cpp; sourceTree = "<group>"; };
 		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
+		6B649F85169985BC003B9D39 /* Borrows.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Borrows.cc; path = test/ddl2orm_generated/Borrows.cc; sourceTree = "<group>"; };
+		6B649F86169985BC003B9D39 /* Borrows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Borrows.h; path = test/ddl2orm_generated/Borrows.h; sourceTree = "<group>"; };
 		6B72829C166EDAE300360BA1 /* OrmGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrmGenerator.h; sourceTree = "<group>"; };
 		6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrmGenerator.cpp; sourceTree = "<group>"; };
 		6B89A3CA16988D7C0060B209 /* liblorm-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liblorm-static.a"; path = "test/liblorm/liblorm-static.a"; sourceTree = "<group>"; };
@@ -196,6 +199,8 @@
 		6BA82F081503959F00ECD299 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				6B649F85169985BC003B9D39 /* Borrows.cc */,
+				6B649F86169985BC003B9D39 /* Borrows.h */,
 				6BC3A0EF16735C62007BE468 /* Book.cc */,
 				6BC3A0F016735C62007BE468 /* Book.h */,
 				6BC3A0F116735C62007BE468 /* Person.cc */,
@@ -327,6 +332,7 @@
 				6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */,
 				6BC3A0F316735C62007BE468 /* Book.cc in Sources */,
 				6BC3A0F416735C62007BE468 /* Person.cc in Sources */,
+				6B649F87169985BC003B9D39 /* Borrows.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

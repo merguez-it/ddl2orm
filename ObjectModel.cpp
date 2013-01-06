@@ -47,8 +47,8 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 			virtual_member.type=mt.className;
 			virtual_member.reverseRoleName=fieldIt->first;
 			wstring generatedName=targetMappedTable.add_to_many_role(mt.tableName, virtual_member); //TODO: Inject one to-many role name as it may be crappy
-			if (generatedName!=mt.tableName+L"s") { 
-				wcout << L"[WARNING] One-to-many generated role: " << mt.tableName <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
+			if (generatedName!=mt.tableName+L"s" && generatedName!=mt.tableName) {
+				wcout << L"[WARNING] One-to-many generated role: " << targetMappedTable.tableName <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
 			}
 		} 
 	}
@@ -82,11 +82,11 @@ void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
 	role1.linkClass=bidirectional_association.tableName;
 	role2.linkClass=bidirectional_association.tableName;
 	wstring generatedName=tables[role2.type].add_to_many_role(role1.roleName,role1);
-	if (generatedName!=wstring(roles.first.roleName+L"s")) { 
+	if (generatedName!=wstring(roles.first.roleName+L"s") && generatedName!=roles.first.roleName) { 
 		wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
 	}
 	generatedName=tables[role1.type].add_to_many_role(role2.roleName,role2);
-	if (generatedName!=wstring(roles.second.roleName+L"s")) { 
+	if (generatedName!=wstring(roles.second.roleName+L"s") && generatedName!=roles.second.roleName ) { 
 		wcout << "[WARNING] Many-to-many generated role " << role1.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
 	}
 }

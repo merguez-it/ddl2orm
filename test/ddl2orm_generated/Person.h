@@ -12,6 +12,7 @@
 #include "lorm.h"
 
 class Book;
+class Borrows;
 
 class Person : public table<Person> { 
 public: 
@@ -19,7 +20,8 @@ public:
 	column<int> id;
 	column<std::string> name;
 	COLLECTION(Book,books);
-	COLLECTION(Book,borrowed_books);
+	COLLECTION(Borrows,borrows);
+	COLLECTION(Book,liked_books);
 };
 
 #endif

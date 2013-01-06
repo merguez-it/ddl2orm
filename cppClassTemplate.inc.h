@@ -47,7 +47,8 @@ static const wstring implementationPrologue=L"\
 */\n\n\
 #include \"$className.h\"\n";
 
-static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n\tidentity(\"$id\",&$className::id);\n$fieldsImpl};\n\n";
+static const wstring registerTemplate= L"REGISTER_TABLE($className) {\n$fieldsImpl};\n\n";
+static const wstring identityTemplate= L"\tidentity(\"$id\",&$className::id);\n";
 static const wstring fieldTemplate = L"\tfield(\"$fieldName\", &$className::$roleName);\n";
 static const wstring has_oneTemplate = L"\thas_one(\"$fkName\", &$className::$roleName);\n";
 static const wstring has_manyTemplate = L"has_many($sourceClassName,$targetClassName,$roleName,$reverseRoleName);\n";

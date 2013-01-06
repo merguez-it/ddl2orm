@@ -63,11 +63,12 @@ set<wstring> MappedTable::getClassDependencies() const {
 }
 
 wstring MappedTable::add_to_many_role(const wstring& roleName, MemberDesc &role) {
-	wstring result=roleName + L"s"; // TODO: Traiter les injections de nom des rôles "to-many" - ou au moins pluralize
+  wstring plural = *(--roleName.end()) == L's' ? L"" : L"s"; // TODO: Traiter les injections de nom des rôles "to-many" - ou au moins pluralize
+	wstring result=roleName + plural; 
 	int i=0;
 	while (members.count(result)!=0) { 
 		std::wstringstream str;
-		str << roleName << L"s_"<< ++i;
+		str << roleName << plural << "_"<< ++i;
 		result = str.str();
 	}
 	role.roleName=result;

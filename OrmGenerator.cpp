@@ -58,9 +58,9 @@ wstring OrmGenerator::classHeader(const MappedTable& mt) const {
 		classHeader += interfacePrologue;			// .h header
 		classHeader += forwardDeclarations(mt);
 		classHeader += interfaceClassPrologue;	// Public fields
-		if (!mt.primaryKey.empty()) {
+		//if (!mt.primaryKey.empty()) {
 			classHeader+=L"\tcolumn<int> id;\n";
-		}
+		//}
 		set < MemberDesc, less_decl> ordered_decls;
 		for (FieldIt it=mt.members.begin();it!=mt.members.end();it++) { // Members mapped with their cpp type
 			if (mt.primaryKey!=it->first) {
@@ -78,7 +78,6 @@ wstring OrmGenerator::classHeader(const MappedTable& mt) const {
 	}
 	return classHeader;
 };
-
 
 wstring OrmGenerator::fieldImpl(const MappedTable& mt,const MemberDesc& field) const {
 	wstring result=fieldTemplate; //TODO:  refactor the functional way
@@ -100,14 +99,12 @@ wstring OrmGenerator::oneToManyImpl(const MappedTable& mt,const MemberDesc& fiel
 	//	has_many(Person,Book,personal_library,owner);
 	wstring result;
 	MappedTable toManyClass=model.tables.find(field.type)->second;
-	if (!toManyClass.isAssociationClass()) { // TODO Map association classes as soon as lorm support it.    
-		MemberDesc reverseRole=mt.members.find(field.roleName)->second;
-		result=has_manyTemplate;
-		replaceAll(L"$sourceClassName", mt.className, result);
-		replaceAll(L"$roleName", field.roleName, result);
-		replaceAll(L"$targetClassName", toManyClass.className, result);
-		replaceAll(L"$reverseRoleName",field.reverseRoleName,result);		
-	}
+  MemberDesc reverseRole=mt.members.find(field.roleName)->second;
+  result=has_manyTemplate;
+  replaceAll(L"$sourceClassName", mt.className, result);
+  replaceAll(L"$roleName", field.roleName, result);
+  replaceAll(L"$targetClassName", toManyClass.className, result);
+  replaceAll(L"$reverseRoleName",field.reverseRoleName,result);		
 	return result;
 }
 
@@ -134,7 +131,9 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 	wstring classBody=implementationPrologue;
 	classBody+=implementationIncludes(mt) + + L"\n" ;
 	wstring registration=registerTemplate;
+  
 	set<wstring> registered_fields,computed_collections;
+  wstring registered_fields_str;
 	for (FieldIt it = mt.members.begin(); it != mt.members.end(); it++) {
 		MemberKind memberKind=it->second.kind;
 		switch (memberKind) {
@@ -142,7 +141,9 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 			case NULLABLE_DATA:
 				if (mt.primaryKey!=it->first) {
 					registered_fields.insert(fieldImpl(mt,it->second)); 
-				}
+				} else {
+          registered_fields_str+=identityTemplate;
+        }
 				break;
 			case TO_ONE:
 				registered_fields.insert(toOneImpl(mt,it->second));
@@ -156,7 +157,6 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 			default: assert(false);
 		}
 	}
-	wstring registered_fields_str;
 	for (set<wstring>::iterator it=registered_fields.begin();it!=registered_fields.end();it++) {registered_fields_str+=*it;}
 	replaceAll(L"$fieldsImpl",registered_fields_str, registration);
 	classBody+=registration;
@@ -176,12 +176,12 @@ int OrmGenerator::generateFiles() {
 		string className=string(mt.className.begin(),mt.className.end());
 		assert(!className.empty());
 		if (!mt.isPureBinaryAssociation()) { // binary-associations are mapped using "many-to-many" roles in respective end-classes.
-			if (!mt.isAssociationClass()) {
-				string path_interface=model.outputDir+PATH_SEPARATOR+className+".h"; 
-				string path_implementation=model.outputDir+PATH_SEPARATOR+className+".cc";
-				wofstream out_interface(path_interface.c_str()); //TODO: DRY !
-				wofstream out_implementation(path_implementation.c_str());
-				if (out_interface.is_open() && out_implementation.is_open())	{	
+      string path_interface=model.outputDir+PATH_SEPARATOR+className+".h";
+      string path_implementation=model.outputDir+PATH_SEPARATOR+className+".cc";
+      wofstream out_interface(path_interface.c_str()); //TODO: DRY !
+      wofstream out_implementation(path_implementation.c_str());
+//			if (!mt.isAssociationClass()) {
+				if (out_interface.is_open() && out_implementation.is_open())	{
 					out_interface <<	classHeader(mt); //CANADA: DRY !
 					out_implementation << classImplementation(mt);
 					cout << className << ".h and .cc generated ( "<< mt.members.size() << " members mapped )" << endl;
@@ -190,9 +190,9 @@ int OrmGenerator::generateFiles() {
 					cout << "I/O error while generating " << className << endl;
 					result=-1;
 				}
-			} else {
-				cout << "[WARNING] : " << className << " not mapped as it has no simple PK" << endl;
-			}
+//			} else { // Association Class: Mapped as a Class with no identity 
+//				cout << "[WARNING] : " << className << " not mapped as it has no simple PK" << endl;
+//			}
 		}
 	} 	
 	return result;

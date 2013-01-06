@@ -7,6 +7,7 @@
 */
 
 #include "Book.h"
+#include "Borrows.h"
 #include "Person.h"
 
 REGISTER_TABLE(Book) {
@@ -16,4 +17,5 @@ REGISTER_TABLE(Book) {
 	has_one("ownerId", &Book::owner);
 };
 
-has_and_belongs_to_many(Book,Person,borrowers,"borrows","borrowed_book_id","borrower_id");
+has_and_belongs_to_many(Book,Person,happy_readers,"likes","liked_book_id","happy_reader_id");
+has_many(Book,Borrows,borrows,borrowed_book);
