@@ -88,7 +88,7 @@ TypeSpec<wstring &typeDecl> =														(. typeDecl=L"What_The_F_ck";	.)
 |	("TINYINT"																		(. typeDecl=L"int";				.)
 	|"SMALLINT"																		(. typeDecl=L"int";				.)
 	)							
-|	("TEXT" | "text" | "CHAR" | "char" '('number')' 
+|	("TEXT" | "text" | (("CHAR" | "char") '('number')')
 	 | ("VARCHAR"|"varchar")'('number')')											(. typeDecl=L"std::string";		.)
 |	("DOUBLE"| "double" | "BIG" "DECIMAL"| "big" "decimal" | 
 	 "DECIMAL"'('number [','number]')'					
@@ -104,9 +104,8 @@ ValueSpec<const wstring& fieldName,MappedTable& mt>
 .
 
 CheckSpec
-= "CHECK" '('
+= ("CHECK" | "check")
 	CheckCondition
- ')'
 .
 
 CheckCondition
