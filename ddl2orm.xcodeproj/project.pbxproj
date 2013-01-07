@@ -112,7 +112,6 @@
 			children = (
 				6B99F3971672F6FC00F80AB4 /* lorm */,
 				6BA82F081503959F00ECD299 /* test */,
-				6B8EAEC314FEBE560023899E /* ddl2orm.atg */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
@@ -122,6 +121,7 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6B8EAEC314FEBE560023899E /* ddl2orm.atg */,
 				6B184A0415108AD700E5C7DA /* headers */,
 				6BC62AD015089339002A562C /* cocoGenerated */,
 				6B8EAECD14FED55B0023899E /* main.cpp */,

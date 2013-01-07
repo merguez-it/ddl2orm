@@ -33,8 +33,6 @@ int ObjectModel::parseDDLtoObjectModel() {
 	return 0;
 }
 
-// Given an table, populates the MappedTables matching the end of each "to-one" associations, with the "reversed"  member-specification  
-// used to navigate the association from it's other end.
 void ObjectModel::populateReversedToOne(MappedTable& mt) {
 	for (FieldIt fieldIt=mt.members.begin(); fieldIt!=mt.members.end(); fieldIt++) {
 		if (mt.isToOneRole(fieldIt->first)) {
@@ -54,41 +52,28 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 	}
 }
 
-// Returns the pair of MappedTable representing role-ends description, for a given MappedTable that represents a bi-directional association.
-std::pair<MappedTable, MappedTable> ObjectModel::getLinkedClasses(const MappedTable& mt) const {
-	assert(mt.isPureBinaryAssociation());
-	pair<MemberDesc , MemberDesc > p = mt.getLinkedRoles();
-	wstring class_role1=p.first.type;
-	wstring class_role2=p.second.type;
-	assert(tables.count(class_role1)==1);
-	assert(tables.count(class_role2)==1);
-	return pair<MappedTable, MappedTable >(tables.find(class_role1)->second,tables.find(class_role2)->second);
-}
-
-// Given an association table (i.e: "many-to-many" link table), populates MappedTables matching the ends of the association with member-specification  
-// used to navigate that association from either of its class-ends.
-// Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships. 
-// 		     "bidirectional_association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
-void ObjectModel::populateManyToMany(MappedTable& bidirectional_association) {
-	assert(bidirectional_association.isPureBinaryAssociation());
-	pair<MemberDesc,MemberDesc> roles = bidirectional_association.getLinkedRoles();
-	
-	MemberDesc role1 = roles.first;
-	MemberDesc role2 = roles.second;
-	assert(tables.count(role1.type)==1);
-	assert(tables.count(role2.type)==1);
-	role1.kind=MANY_TO_MANY;
-	role2.kind=MANY_TO_MANY;
-	role1.linkClass=bidirectional_association.tableName;
-	role2.linkClass=bidirectional_association.tableName;
-	wstring generatedName=tables[role2.type].add_to_many_role(role1.roleName,role1);
-	if (generatedName!=wstring(roles.first.roleName+L"s") && generatedName!=roles.first.roleName) { 
-		wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
-	}
-	generatedName=tables[role1.type].add_to_many_role(role2.roleName,role2);
-	if (generatedName!=wstring(roles.second.roleName+L"s") && generatedName!=roles.second.roleName ) { 
-		wcout << "[WARNING] Many-to-many generated role " << role1.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
-	}
+void ObjectModel::populateManyToMany(MappedTable& association) {
+  
+  for (MemberMap::iterator role_it1=association.members.begin();role_it1!=association.members.end();role_it1++ ) {
+    MemberDesc role1 = role_it1->second;
+    if (role1.kind == TO_ONE ) {
+      role1.kind=MANY_TO_MANY;
+      role1.linkClass=association.tableName;
+      assert(tables.count(role1.type)==1);
+      for (MemberMap::iterator role_it2=association.members.begin();role_it2!=association.members.end();role_it2++ ) {
+        MemberDesc role2 = role_it2->second;
+        if (role2.kind == TO_ONE && role1.fkName!=role2.fkName) {
+          assert(tables.count(role2.type)==1);
+          role1.reverseRoleName=role2.fkName;
+          wstring generatedName=tables[role2.type].add_to_many_role(role1.roleName,role1);
+          if (generatedName!=wstring(role1.roleName+L"s") && generatedName!=role1.roleName) {
+            wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a    non-significant ambiguous crappy name..." << endl;
+          }
+          
+        }
+      }
+    }
+  }
 }
 
 MappedTables ObjectModel::pure_associations_tables() const {
@@ -104,9 +89,11 @@ MappedTables ObjectModel::pure_associations_tables() const {
 void ObjectModel::populateRelationships() {
 	for (MappedTables::iterator it=tables.begin(); it!=tables.end(); it++) {
 		MappedTable& mt=it->second;
-		if (mt.isPureBinaryAssociation()) {
+		if (mt.isAssociationClass() || mt.isPureBinaryAssociation()) {
 			populateManyToMany(mt);
-		} else {
+		}
+    if (!mt.isPureBinaryAssociation())
+    {
 			populateReversedToOne(mt);
 		} 
 	}

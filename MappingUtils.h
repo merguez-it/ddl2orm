@@ -64,9 +64,14 @@ inline wstring stripSuffix(wstring keyName) {
 	return result;
 }
 
-inline wstring& operator << (wstring& target , const vector<wstring>& source ) {
-	
-	return target;
-}
+struct case_insensistive_compare : std::binary_function<wstring, wstring, bool> {
+  bool operator()(const wstring &lhs, const wstring &rhs) const {
+    wstring l=lhs;
+    wstring r=rhs;
+    std::transform(l.begin(), l.end(), l.begin(), ::toupper);
+    std::transform(r.begin(), r.end(), r.begin(), ::toupper);
+    return (l < r);
+  }
+};
 
 #endif

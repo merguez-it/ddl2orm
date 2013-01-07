@@ -111,19 +111,15 @@ wstring OrmGenerator::oneToManyImpl(const MappedTable& mt,const MemberDesc& fiel
 wstring OrmGenerator::manyToManyImpl(const MappedTable& mt,const MemberDesc& member) const {
 	//has_and_belongs_to_many($className,$targetClassName,$roleName,\"$linkTable\",\"$sourceFK\",\"$targetFK\");\n";
   //has_and_belongs_to_many(Person,Book,borrowed_books,"borrows","borrower_id","borrowed_book_id");
+  assert(member.kind==MANY_TO_MANY);
+  assert(model.tables.count(member.linkClass)==1);
 	wstring result=hmbtTemplate;
-	assert(model.tables.count(member.linkClass)==1);
-	MappedTable association=model.tables.find(member.linkClass)->second;
-	assert(association.isAssociationClass() || association.isPureBinaryAssociation());
-	pair < MemberDesc , MemberDesc > roles = association.getLinkedRoles();
-	MemberDesc& targetRole = member.fkName == roles.first.fkName ? roles.first : roles.second;
-	MemberDesc& sourceRole = &targetRole == &roles.first ? roles.second : roles.first;
 	replaceAll(L"$sourceClassName", mt.className, result);
-	replaceAll(L"$targetClassName" , targetRole.type , result);
+	replaceAll(L"$targetClassName" , member.type , result);
 	replaceAll(L"$roleName" , member.roleName , result);
-	replaceAll(L"$linkTable" ,association.tableName , result);
-	replaceAll(L"$sourceFK" , sourceRole.fkName , result);
-	replaceAll(L"$targetFK" , targetRole.fkName , result);
+	replaceAll(L"$linkTable" ,member.linkClass,result);
+	replaceAll(L"$sourceFK" , member.reverseRoleName , result);
+	replaceAll(L"$targetFK" , member.fkName , result);
 	return result;
 }
 
@@ -180,19 +176,15 @@ int OrmGenerator::generateFiles() {
       string path_implementation=model.outputDir+PATH_SEPARATOR+className+".cc";
       wofstream out_interface(path_interface.c_str()); //TODO: DRY !
       wofstream out_implementation(path_implementation.c_str());
-//			if (!mt.isAssociationClass()) {
-				if (out_interface.is_open() && out_implementation.is_open())	{
-					out_interface <<	classHeader(mt); //CANADA: DRY !
-					out_implementation << classImplementation(mt);
-					cout << className << ".h and .cc generated ( "<< mt.members.size() << " members mapped )" << endl;
-				}
-				if (out_interface.fail() || out_implementation.fail() ) {
-					cout << "I/O error while generating " << className << endl;
-					result=-1;
-				}
-//			} else { // Association Class: Mapped as a Class with no identity 
-//				cout << "[WARNING] : " << className << " not mapped as it has no simple PK" << endl;
-//			}
+      if (out_interface.is_open() && out_implementation.is_open())	{
+        out_interface <<	classHeader(mt); //CANADA: DRY !
+        out_implementation << classImplementation(mt);
+        cout << className << ".h and .cc generated ( "<< mt.members.size() << " members mapped )" << endl;
+      }
+      if (out_interface.fail() || out_implementation.fail() ) {
+        cout << "I/O error while generating " << className << endl;
+        result=-1;
+      }
 		}
 	} 	
 	return result;

@@ -23,7 +23,7 @@ using namespace std;
 
 // Enumerates the kind of elements that could be mapped from a reversed DB table.
 enum  MemberKind {
-	DATA, NULLABLE_DATA, TO_ONE, ONE_TO_MANY, MANY_TO_MANY, MANY_TO_MANY_WITH_INFO
+	DATA, NULLABLE_DATA, TO_ONE, ONE_TO_MANY, MANY_TO_MANY
 };
 
 // Describes a member belonging to a mapping class.
@@ -43,7 +43,7 @@ struct MemberDesc {
 	// - If the described member is a ONE_TO_MANY role, fkName is the key used to refer this TO_ONE object 
 	//   from the "many" side of the relationship
 	// - If the described member is of kind MANY_TO_MANY, fkName is the foreign key 
-	//   stored in the link table, that is used to fetch the elements at the other side of the relationship.
+	//   stored in the link table, that is used to fetch the elements by id at the other side of the relationship.
 	wstring fkName;
 	
 	// Class that maps a link table used to hold a relationship in the DB,
@@ -54,7 +54,7 @@ struct MemberDesc {
 	//   used at the other side of the relationship to refer *this* object.
 	// - If the described member is a ONE_TO_MANY role, reverseRoleName is the TO_ONE role name 
 	//   used at the other side of the relationship to refer *this* object.
-	// - otherwise, it is undefined.
+	// - If the described member is a MANY_TO_MANY role, reverseRoleName is the foreign key used in the linkClass used to refer *this* side of the relationship.
 	wstring reverseRoleName;
 };
 
@@ -119,7 +119,7 @@ public:
 	// Returns true if the mapped table represents an association class
 	// i.e: contains data and no single PK.
 	// Skipped from generation in the current version. TODO: Implement association-classes
-	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty() && fkToPk.size()==2;}
+	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty();}
   
   // Returns the set of classes which this MappedTable depends on.
   set<wstring> getClassDependencies() const;
@@ -135,11 +135,6 @@ protected:
 	// based on the given roleName pluralized (vite,TODO: mgz-utils !).
 	// Returns the name of the role actually inserted into the mapped table.
 	wstring add_to_many_role(const wstring& roleName, MemberDesc &role); 
-	
-	// Returns the pair of member descriptors representing role-ends of a MappedTable
-	// that is assumed to model a bi-directional association.
-	// Asserts if *this* is not a pure binarassociation
-	std::pair<MemberDesc , MemberDesc> getLinkedRoles() const;
 	
 }; 
 

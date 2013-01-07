@@ -18,10 +18,11 @@ CREATE TABLE "book" (
 BEGIN;
 INSERT INTO "book" VALUES ('Lord of the rings 1', 'J.R.R Tolkien', 1, 2);
 INSERT INTO "book" VALUES ('Lord of the rings 2', 'J.R.R Tolkien', 2, 3);
+INSERT INTO "book" VALUES ('Lord of the rings 3', 'J.R.R Tolkien', 3, 1);
 INSERT INTO "book" VALUES ('Effective C++', 'Scott Meyer', 4, 4);
 INSERT INTO "book" VALUES ('Design Patterns', 'Gamme et alt.', 5, 4);
 INSERT INTO "book" VALUES ('Principle Of Compiler Design', 'Ullman et alt.', 6, 4);
-INSERT INTO "book" VALUES ('Harry Potter and the chamber of secrets', 'J.K. Rowling', 7, 1);
+INSERT INTO "book" VALUES ('Harry Potter and the chamber of secrets', 'J.K. Rowling', 7, 4);
 INSERT INTO "book" VALUES ('Moby Dick', 'Hermann Melville', 8, 5);
 COMMIT;
 
@@ -47,7 +48,7 @@ INSERT INTO "borrows" VALUES (2, 4,'1967-12-17');
 INSERT INTO "borrows" VALUES (2, 5,'2012-06-21');
 INSERT INTO "borrows" VALUES (6, 3,'2005-07-06');
 INSERT INTO "borrows" VALUES (6, 2,'2013-10-14');
-INSERT INTO "borrows" VALUES (6, 4,'2010-08-20');
+INSERT INTO "borrows" VALUES (3, 4,'2010-08-20');
 INSERT INTO "borrows" VALUES (4, 2,'1964-04-11');
 INSERT INTO "borrows" VALUES (7, 1,'2004-11-11');
 COMMIT;
@@ -71,7 +72,7 @@ INSERT INTO "likes" VALUES(2,4);
 INSERT INTO "likes" VALUES(2,5);
 INSERT INTO "likes" VALUES(6,3);
 INSERT INTO "likes" VALUES(6,2);
-INSERT INTO "likes" VALUES(6,4);
+INSERT INTO "likes" VALUES(5,4);
 COMMIT;
 
 

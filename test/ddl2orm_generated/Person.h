@@ -21,6 +21,7 @@ public:
 	column<std::string> name;
 	COLLECTION(Book,books);
 	COLLECTION(Borrows,borrows);
+	COLLECTION(Book,borrowed_books);
 	COLLECTION(Book,liked_books);
 };
 

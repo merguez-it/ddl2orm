@@ -3,7 +3,7 @@
  *  ddl2orm
  *
  *  The model that instantiates a SQL (Coco) parser, 
- *  store the parsed tables descriptions, and generates corresponding cpp mapping for ODB.
+ *  store the parsed tables descriptions as a full Object Model (Describing Classes, attributes, associations, roles...) .
  *
  *  Created by Mathias Franck on 13/03/12.
  *  Copyleft 2012 Merguez-IT. All rights reserved.
@@ -15,19 +15,11 @@
 #include <stdlib.h>
 #include <map>
 #include <wchar.h>
+#include "MAppingUtils.h"
 #include "MappedTable.h"
 
 using namespace std;
 
-struct case_insensistive_compare : std::binary_function<wstring, wstring, bool> {
-    bool operator()(const wstring &lhs, const wstring &rhs) const {
-        wstring l=lhs;
-        wstring r=rhs;
-        std::transform(l.begin(), l.end(), l.begin(), ::toupper);
-        std::transform(r.begin(), r.end(), r.begin(), ::toupper);
-        return (l < r);
-    }
-};
 
 typedef map<wstring,MappedTable,case_insensistive_compare> MappedTables;
 
@@ -44,11 +36,21 @@ public:
 private:
 	
 	friend class OrmGenerator;
-
+  
+  // Given an table, populates the MappedTables matching the end of each "to-one" associations, with the "reversed"  member-specification
+  // used to navigate the association from it's other end.
 	void populateReversedToOne(MappedTable& mt);
+  
+  // Given an association (i.e: "many-to-many" link table, even n-ary with n>2),
+  // populates MappedTables matching the ends of the association with member-specification
+  // used to navigate that association from either of its class-ends.
+  // Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships.
+  // 		     "association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
 	void populateManyToMany(MappedTable& relation);
-	void populateRelationships();
-	std::pair< MappedTable , MappedTable > getLinkedClasses(const MappedTable& mt) const;
+  
+	// Analyzes all mapped tables to produce any accessors for "ONE_TO_MANY" and "MANY_TO_MANY" associations.
+  void populateRelationships();
+
 	friend class Parser;
 	Parser *parser;
 	string outputDir;

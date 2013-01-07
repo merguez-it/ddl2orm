@@ -22,6 +22,7 @@ public:
 	column<std::string> title;
 	reference<Person> owner;
 	COLLECTION(Borrows,borrows);
+	COLLECTION(Person,borrowers);
 	COLLECTION(Person,happy_readers);
 };
 

@@ -44,13 +44,6 @@ bool MappedTable::isPureBinaryAssociation() const {
 	return fkToPk.size() == members.size() && 2 == members.size(); // équivaut à : pas d'autres champs que 2 clés ... bof ...
 }
 
-std::pair<MemberDesc , MemberDesc> MappedTable::getLinkedRoles() const {
-	assert(isPureBinaryAssociation()) ;
-	MemberDesc role1=members.begin()->second ;
-	MemberDesc role2=(++members.begin())->second ;
-	return pair<MemberDesc , MemberDesc >(role1,role2) ;
-}
-
 // Returns the set of classes which this MappedTable depends on.
 set<wstring> MappedTable::getClassDependencies() const {
 	set<wstring> result;

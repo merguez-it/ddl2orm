@@ -41,9 +41,19 @@ int main (int argc, char * const argv[]) {
 	Person who;
 	collection<Person> *everyone = who.find();
 	for ( collection<Person>::iterator p=everyone->begin() ; p!=everyone->end() ; p++ )	{
-		cout << p->name << " ( with id " << p->id << ") owns " << p->books().size() << " book(s)" << endl;
-		cout << "and  borrowed " << p->borrows().size() << " book(s)." << endl;
-    cout << "he / she liked " << p->liked_books().size() << " book(s)." << endl << endl;
+		cout << p->name << " ( with id " << p->id << ") owns " << p->books().size() << " book(s) :" << endl;
+    for (int i=0; i < p->books().size() ; i++) {
+      cout << "\tOwned:  " << p->books()[i].title  << endl;
+    }
+		cout << "and  borrowed " << p->borrows().size() << " book(s) :" << endl;
+    for (int i=0; i < p->borrows().size() ; i++) {
+      cout << "\tBorrowed : " << p->borrowed_books()[i].title << " on " << p->borrows()[i].date_of_borrow << endl;
+    }
+    cout << p->name << " liked " << p->liked_books().size() << " book(s) :" << endl;
+    for (int i=0; i < p->liked_books().size() ; i++) {
+      cout << "\tLiked:  " << p->liked_books()[i].title << endl;
+    }
+    cout << endl;
 	}
 	Lorm::disconnect();
 }
