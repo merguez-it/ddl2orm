@@ -93,7 +93,7 @@ TypeSpec<wstring &typeDecl> =														(. typeDecl=L"What_The_F_ck";	.)
 |	("DOUBLE"| "double" | "BIG" "DECIMAL"| "big" "decimal" | 
 	 "DECIMAL"'('number [','number]')'					
 	)																				(. typeDecl=L"double";			.)
-|	("DATE"  | "date" )																(. typeDecl=L"datetime";		.)
+|	"DATE"                                                                          (. typeDecl=L"datetime";		.)
 .
 
 ValueSpec<const wstring& fieldName,MappedTable& mt>  
@@ -110,7 +110,9 @@ CheckSpec
 
 CheckCondition
 =(	['"']identifier['"'] 
-	((comparator Value) | (("IN"|"in") ValueList) |	("IS" ["NOT"|"not"] ("NULL"|"null") )) 
+	((comparator Value) | (("IN"|"in") ValueList) |
+     ("IS" ["NOT"|"not"] ("NULL"|"null") )
+    )
 	[("OR" | "AND") CheckCondition]
  )	|
  ( '(' CheckCondition ')') 
