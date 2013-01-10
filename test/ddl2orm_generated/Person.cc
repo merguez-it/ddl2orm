@@ -6,12 +6,14 @@
 *
 */
 
-#include "Person.h"
 #include "Book.h"
 #include "Borrows.h"
 
+#include "Person.h"
+
 REGISTER_TABLE(Person) {
 	identity("person_id",&Person::id);
+	field("date_of_birth", &Person::date_of_birth);
 	field("name", &Person::name);
 };
 

@@ -6,9 +6,10 @@
 *
 */
 
-#include "Borrows.h"
 #include "Book.h"
 #include "Person.h"
+
+#include "Borrows.h"
 
 REGISTER_TABLE(Borrows) {
 	field("date_of_borrow", &Borrows::date_of_borrow);

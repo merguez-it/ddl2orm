@@ -40,20 +40,21 @@ void ObjectModel::populateReversedToOne(MappedTable& mt) {
 			assert(!targetClass.empty());
 			assert(tables.count(targetClass)==1);
 			MappedTable& targetMappedTable = tables[targetClass];
-			MemberDesc virtual_member;
-			virtual_member.kind=ONE_TO_MANY;
-			virtual_member.type=mt.className;
-			virtual_member.reverseRoleName=fieldIt->first;
-			wstring generatedName=targetMappedTable.add_to_many_role(mt.tableName, virtual_member); //TODO: Inject one to-many role name as it may be crappy
-			if (generatedName!=mt.tableName+L"s" && generatedName!=mt.tableName) {
-				wcout << L"[WARNING] One-to-many generated role: " << targetMappedTable.tableName <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
-			}
+      if (!targetMappedTable.isReferenceTable()){
+        MemberDesc virtual_member;
+        virtual_member.kind=ONE_TO_MANY;
+        virtual_member.type=mt.className;
+        virtual_member.reverseRoleName=fieldIt->first;
+        wstring generatedName=targetMappedTable.add_to_many_role(mt.tableName, virtual_member); //TODO: Inject one to-many role name as it may be crappy
+        if (generatedName!=mt.tableName+L"s" && generatedName!=mt.tableName) {
+          wcout << L"[WARNING] One-to-many generated role: " << targetMappedTable.tableName <<  L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
+        }
+      }
 		} 
 	}
 }
 
 void ObjectModel::populateManyToMany(MappedTable& association) {
-  
   for (MemberMap::iterator role_it1=association.members.begin();role_it1!=association.members.end();role_it1++ ) {
     MemberDesc role1 = role_it1->second;
     if (role1.kind == TO_ONE ) {
@@ -62,21 +63,23 @@ void ObjectModel::populateManyToMany(MappedTable& association) {
       assert(tables.count(role1.type)==1);
       for (MemberMap::iterator role_it2=association.members.begin();role_it2!=association.members.end();role_it2++ ) {
         MemberDesc role2 = role_it2->second;
-        if (role2.kind == TO_ONE && role1.fkName!=role2.fkName) {
+        if (role2.kind == TO_ONE &&
+            role1.fkName!=role2.fkName &&
+            !tables[role2.type].isReferenceTable()) {
           assert(tables.count(role2.type)==1);
           role1.reverseRoleName=role2.fkName;
-          wstring generatedName=tables[role2.type].add_to_many_role(role1.roleName,role1);
-          if (generatedName!=wstring(role1.roleName+L"s") && generatedName!=role1.roleName) {
-            wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a    non-significant ambiguous crappy name..." << endl;
+          wstring radical = role1.roleName;
+          wstring generatedName=tables[role2.type].add_to_many_role(radical,role1);
+          if (generatedName!=radical+L"s" && generatedName!=radical) {
+            wcout << "[WARNING] Many-to-many generated role " << role2.type << L"." << generatedName << " may have a non-significant ambiguous crappy name..." << endl;
           }
-          
         }
       }
     }
   }
 }
 
-MappedTables ObjectModel::pure_associations_tables() const {
+MappedTables ObjectModel::pure_binary_associations() const {
   MappedTables result;
 	for (MappedTables::const_iterator it=tables.begin(); it!=tables.end(); it++) {
     if (it->second.isPureBinaryAssociation()) {
@@ -86,13 +89,34 @@ MappedTables ObjectModel::pure_associations_tables() const {
   return result;
 }
 
+MappedTables ObjectModel::association_classes() const {
+    MappedTables result;
+	for (MappedTables::const_iterator it=tables.begin(); it!=tables.end(); it++) {
+        if (it->second.isAssociationClass()) {
+            result.insert(*it);
+        }
+    }
+    return result;
+}
+
+MappedTables ObjectModel::reference_tables() const {
+    MappedTables result;
+	for (MappedTables::const_iterator it=tables.begin(); it!=tables.end(); it++) {
+        if (it->second.isReferenceTable()) {
+            result.insert(*it);
+        }
+    }
+    return result;
+}
+// Returns the set of classes which this MappedTable depends on.
+
 void ObjectModel::populateRelationships() {
 	for (MappedTables::iterator it=tables.begin(); it!=tables.end(); it++) {
 		MappedTable& mt=it->second;
 		if (mt.isAssociationClass() || mt.isPureBinaryAssociation()) {
 			populateManyToMany(mt);
 		}
-    if (!mt.isPureBinaryAssociation())
+    if (!mt.isPureBinaryAssociation() && !mt.isReferenceTable())
     {
 			populateReversedToOne(mt);
 		} 

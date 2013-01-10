@@ -2,6 +2,7 @@
 *.perspectivev3
 *.pbxuser
 *.xcuserstate
+*.xcbkptlist
 build/
 cocoGenerated/
 test/*.hxx

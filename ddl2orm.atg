@@ -71,7 +71,7 @@ TableItemSpec<MappedTable& mt>														(. wstring role; wstring typeDecl;		
 	}[')'] ["AUTOINCREMENT" | "autoincrement" ]
   )						
 | ("FOREIGN" "KEY" '(' identifier													(. role=trimQuotes(t->val); wstring column=trimQuotes(t->val);			.)
-																					(. mt.members.erase(column);	/* we don't keep xxxId, rather we model a xxx role*/		.)
+																					(. if (mt.primaryKey!=column) mt.members.erase(column);	/* we don't keep xxxId, rather we model a xxx role, if xxxId is not also the PK */		.)
 																					(. role = stripSuffix(role);	/* TODO: injecter les règles de nommage des rôles */ .)
 																					(. mt.members[role].roleName=role;  .)
 																					(. mt.members[role].fkName=column;	.)

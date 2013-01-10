@@ -18,6 +18,7 @@ class Person : public table<Person> {
 public: 
   TABLE_INIT(Person,person)
 	column<int> id;
+	column<datetime> date_of_birth;
 	column<std::string> name;
 	COLLECTION(Book,books);
 	COLLECTION(Borrows,borrows);

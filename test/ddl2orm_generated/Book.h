@@ -13,6 +13,7 @@
 
 class Borrows;
 class Person;
+class Tag;
 
 class Book : public table<Book> { 
 public: 
@@ -24,6 +25,7 @@ public:
 	COLLECTION(Borrows,borrows);
 	COLLECTION(Person,borrowers);
 	COLLECTION(Person,happy_readers);
+	COLLECTION(Tag,tags);
 };
 
 #endif

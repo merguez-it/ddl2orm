@@ -120,6 +120,11 @@ public:
 	// i.e: contains data and no single PK.
 	// Skipped from generation in the current version. TODO: Implement association-classes
 	bool isAssociationClass() const {return !isPureBinaryAssociation() && primaryKey.empty();}
+    
+    // Returns true if the mapped table represents an "reference table", i.e a table
+    // containing only one data field (generally a string) with a unique ID.
+    // An object from such a table should not allow "reverse" navigation to the objects that refers to itself.
+    bool isReferenceTable() const {return members.size() == 2  && !primaryKey.empty();}
   
   // Returns the set of classes which this MappedTable depends on.
   set<wstring> getClassDependencies() const;
@@ -134,7 +139,7 @@ protected:
 	// Adds a member (=role) to this mapped table, ensuring it has a unique name,
 	// based on the given roleName pluralized (vite,TODO: mgz-utils !).
 	// Returns the name of the role actually inserted into the mapped table.
-	wstring add_to_many_role(const wstring& roleName, MemberDesc &role); 
+	wstring add_to_many_role(const wstring& roleName, MemberDesc role);
 	
 }; 
 

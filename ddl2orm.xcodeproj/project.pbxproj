@@ -9,26 +9,17 @@
 /* Begin PBXBuildFile section */
 		6B1849B8150F395200E5C7DA /* MappedTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849B7150F395200E5C7DA /* MappedTable.cpp */; };
 		6B1849E8150FC72400E5C7DA /* ObjectModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */; };
-		6B649F87169985BC003B9D39 /* Borrows.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B649F85169985BC003B9D39 /* Borrows.cc */; };
+		6B21E15A169ECE1F003AD663 /* Tag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B21E158169ECE1F003AD663 /* Tag.cc */; };
 		6B72829E166EDAE300360BA1 /* OrmGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */; };
 		6B89A3CB16988D7C0060B209 /* liblorm-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B89A3CA16988D7C0060B209 /* liblorm-static.a */; };
 		6B8EAECE14FED55B0023899E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EAECD14FED55B0023899E /* main.cpp */; };
 		6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B99F3921672F06E00F80AB4 /* main_test.cpp */; };
-		6BC3A0F316735C62007BE468 /* Book.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0EF16735C62007BE468 /* Book.cc */; };
-		6BC3A0F416735C62007BE468 /* Person.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3A0F116735C62007BE468 /* Person.cc */; };
+		6BABB1BB169DFDBE0001C33B /* Book.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BABB1B5169DFDBE0001C33B /* Book.cc */; };
+		6BABB1BC169DFDBE0001C33B /* Borrows.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BABB1B7169DFDBE0001C33B /* Borrows.cc */; };
+		6BABB1BD169DFDBE0001C33B /* Person.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6BABB1B9169DFDBE0001C33B /* Person.cc */; };
 		6BC62AD515089359002A562C /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD115089359002A562C /* Parser.cpp */; };
 		6BC62AD615089359002A562C /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC62AD315089359002A562C /* Scanner.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6B99F4191672FCFA00F80AB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
-			remoteInfo = ddl2orm;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F690486A84900D96B5E /* CopyFiles */ = {
@@ -48,8 +39,8 @@
 		6B1849E6150FC72400E5C7DA /* ObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModel.h; sourceTree = "<group>"; };
 		6B1849E7150FC72400E5C7DA /* ObjectModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModel.cpp; sourceTree = "<group>"; };
 		6B184A201510D13B00E5C7DA /* MappingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappingUtils.h; sourceTree = "<group>"; };
-		6B649F85169985BC003B9D39 /* Borrows.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Borrows.cc; path = test/ddl2orm_generated/Borrows.cc; sourceTree = "<group>"; };
-		6B649F86169985BC003B9D39 /* Borrows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Borrows.h; path = test/ddl2orm_generated/Borrows.h; sourceTree = "<group>"; };
+		6B21E158169ECE1F003AD663 /* Tag.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tag.cc; path = test/ddl2orm_generated/Tag.cc; sourceTree = "<group>"; };
+		6B21E159169ECE1F003AD663 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = test/ddl2orm_generated/Tag.h; sourceTree = "<group>"; };
 		6B72829C166EDAE300360BA1 /* OrmGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrmGenerator.h; sourceTree = "<group>"; };
 		6B72829D166EDAE300360BA1 /* OrmGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrmGenerator.cpp; sourceTree = "<group>"; };
 		6B89A3CA16988D7C0060B209 /* liblorm-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liblorm-static.a"; path = "test/liblorm/liblorm-static.a"; sourceTree = "<group>"; };
@@ -77,11 +68,13 @@
 		6B99F40B1672FC9B00F80AB4 /* uri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uri.h; sourceTree = "<group>"; };
 		6B99F40C1672FC9B00F80AB4 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		6B99F40D1672FC9B00F80AB4 /* vector_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_util.h; sourceTree = "<group>"; };
+		6BABB1B5169DFDBE0001C33B /* Book.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Book.cc; path = test/ddl2orm_generated/Book.cc; sourceTree = "<group>"; };
+		6BABB1B6169DFDBE0001C33B /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Book.h; path = test/ddl2orm_generated/Book.h; sourceTree = "<group>"; };
+		6BABB1B7169DFDBE0001C33B /* Borrows.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Borrows.cc; path = test/ddl2orm_generated/Borrows.cc; sourceTree = "<group>"; };
+		6BABB1B8169DFDBE0001C33B /* Borrows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Borrows.h; path = test/ddl2orm_generated/Borrows.h; sourceTree = "<group>"; };
+		6BABB1B9169DFDBE0001C33B /* Person.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Person.cc; path = test/ddl2orm_generated/Person.cc; sourceTree = "<group>"; };
+		6BABB1BA169DFDBE0001C33B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = test/ddl2orm_generated/Person.h; sourceTree = "<group>"; };
 		6BB71D7116725B3900335EBB /* ddl2orm_sample.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ddl2orm_sample.sql; path = test/ddl2orm_sample.sql; sourceTree = "<group>"; };
-		6BC3A0EF16735C62007BE468 /* Book.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Book.cc; path = test/ddl2orm_generated/Book.cc; sourceTree = "<group>"; };
-		6BC3A0F016735C62007BE468 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Book.h; path = test/ddl2orm_generated/Book.h; sourceTree = "<group>"; };
-		6BC3A0F116735C62007BE468 /* Person.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Person.cc; path = test/ddl2orm_generated/Person.cc; sourceTree = "<group>"; };
-		6BC3A0F216735C62007BE468 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = test/ddl2orm_generated/Person.h; sourceTree = "<group>"; };
 		6BC62AD115089359002A562C /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = cocoGenerated/Parser.cpp; sourceTree = "<group>"; };
 		6BC62AD215089359002A562C /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = cocoGenerated/Parser.h; sourceTree = "<group>"; };
 		6BC62AD315089359002A562C /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = cocoGenerated/Scanner.cpp; sourceTree = "<group>"; };
@@ -199,12 +192,14 @@
 		6BA82F081503959F00ECD299 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				6B649F85169985BC003B9D39 /* Borrows.cc */,
-				6B649F86169985BC003B9D39 /* Borrows.h */,
-				6BC3A0EF16735C62007BE468 /* Book.cc */,
-				6BC3A0F016735C62007BE468 /* Book.h */,
-				6BC3A0F116735C62007BE468 /* Person.cc */,
-				6BC3A0F216735C62007BE468 /* Person.h */,
+				6B21E158169ECE1F003AD663 /* Tag.cc */,
+				6B21E159169ECE1F003AD663 /* Tag.h */,
+				6BABB1B5169DFDBE0001C33B /* Book.cc */,
+				6BABB1B6169DFDBE0001C33B /* Book.h */,
+				6BABB1B7169DFDBE0001C33B /* Borrows.cc */,
+				6BABB1B8169DFDBE0001C33B /* Borrows.h */,
+				6BABB1B9169DFDBE0001C33B /* Person.cc */,
+				6BABB1BA169DFDBE0001C33B /* Person.h */,
 				6B99F3921672F06E00F80AB4 /* main_test.cpp */,
 				6BB71D7116725B3900335EBB /* ddl2orm_sample.sql */,
 			);
@@ -236,7 +231,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				6B99F41A1672FCFA00F80AB4 /* PBXTargetDependency */,
 			);
 			name = "test-borrowing-books";
 			productName = "test-borrowing-books";
@@ -302,7 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir ./test/ddl2orm_generated 2>/dev/null\nrm ./test/ddl2orm_generated/*.h 2>/dev/null\nrm ./test/ddl2orm_generated/*.cc 2>/dev/null\n./build/Debug/ddl2orm ./test/ddl2orm_sample.sql ./test/ddl2orm_generated";
+			shellScript = "# mkdir ./test/ddl2orm_generated 2>/dev/null\n# rm ./test/ddl2orm_generated/*.h 2>/dev/null\n# rm ./test/ddl2orm_generated/*.cc 2>/dev/null\n# ./build/Debug/ddl2orm ./test/ddl2orm_sample.sql ./test/ddl2orm_generated";
 		};
 		6BA82DF215031FED00ECD299 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -330,9 +324,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B99F3931672F06E00F80AB4 /* main_test.cpp in Sources */,
-				6BC3A0F316735C62007BE468 /* Book.cc in Sources */,
-				6BC3A0F416735C62007BE468 /* Person.cc in Sources */,
-				6B649F87169985BC003B9D39 /* Borrows.cc in Sources */,
+				6BABB1BB169DFDBE0001C33B /* Book.cc in Sources */,
+				6BABB1BC169DFDBE0001C33B /* Borrows.cc in Sources */,
+				6BABB1BD169DFDBE0001C33B /* Person.cc in Sources */,
+				6B21E15A169ECE1F003AD663 /* Tag.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,14 +345,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6B99F41A1672FCFA00F80AB4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8DD76F620486A84900D96B5E /* ddl2orm */;
-			targetProxy = 6B99F4191672FCFA00F80AB4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB923208733DC60010E9CD /* Debug */ = {
@@ -463,19 +450,19 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Perso/lorm/build/src,
+					"/usr/local/mysql/lib/**",
 					"\"$(SRCROOT)/test/liblorm\"",
 				);
+				LLVM_LTO = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
+					"-lsqlite3",
+					/usr/local/mysql/lib/libmysqlclient.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "test-borrowing-books";

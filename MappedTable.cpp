@@ -44,7 +44,6 @@ bool MappedTable::isPureBinaryAssociation() const {
 	return fkToPk.size() == members.size() && 2 == members.size(); // équivaut à : pas d'autres champs que 2 clés ... bof ...
 }
 
-// Returns the set of classes which this MappedTable depends on.
 set<wstring> MappedTable::getClassDependencies() const {
 	set<wstring> result;
 	for (FieldIt it = members.begin(); it != members.end(); it++) {
@@ -55,7 +54,7 @@ set<wstring> MappedTable::getClassDependencies() const {
 	return result;
 }
 
-wstring MappedTable::add_to_many_role(const wstring& roleName, MemberDesc &role) {
+wstring MappedTable::add_to_many_role(const wstring& roleName, MemberDesc role) {
   wstring plural = *(--roleName.end()) == L's' ? L"" : L"s"; // TODO: Traiter les injections de nom des rôles "to-many" - ou au moins pluralize
 	wstring result=roleName + plural; 
 	int i=0;

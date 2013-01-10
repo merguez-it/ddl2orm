@@ -135,6 +135,10 @@ wstring OrmGenerator::classImplementation(const MappedTable& mt) const {
 		switch (memberKind) {
 			case DATA:
 			case NULLABLE_DATA:
+        if (mt.tableName==L"posologyAMM") {
+          int dum=123;
+          dum++;
+        }
 				if (mt.primaryKey!=it->first) {
 					registered_fields.insert(fieldImpl(mt,it->second)); 
 				} else {

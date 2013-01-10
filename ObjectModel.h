@@ -30,26 +30,45 @@ class ObjectModel  {
 	
 public:
 	ObjectModel(const string& sqlFile, const string& anOutputDir);
-	int parseDDLtoObjectModel();
+    
+	// Parses the SQL file to populate resulting OO meta-model.
+    int parseDDLtoObjectModel();
+    
+    // Returns the list of all mapped tables
   	const MappedTables& mapped_tables() const {return tables;}
-  	MappedTables pure_associations_tables() const ;
+    
+    // Returns the list of all tables that has been mapped as
+    // pure binary many-to-many associations (no class for those tables)
+  	MappedTables pure_binary_associations() const ;
+    
+    // Returns the list of all tables that has been mapped as
+    // associations classes. Those table are mapped as links, but also as classes,
+    // because as it may be interesting to access data fields contained in this table.
+    MappedTables association_classes() const;
+    
+    // Returns the list of all tables that represent a "reference table"
+    // (i.e: <id,string value> ).
+    // An instance from a reference table do not allow "reverse" navigation
+    // to the "real" objects instances that refers to itself (otherwise, mapping would be uselessly heavier)
+    MappedTables reference_tables() const;
+
 private:
 	
 	friend class OrmGenerator;
   
-  // Given an table, populates the MappedTables matching the end of each "to-one" associations, with the "reversed"  member-specification
-  // used to navigate the association from it's other end.
+    // Given an table, populates the MappedTables matching the end of each "to-one" associations, with the "reversed"  member-specification
+    // used to navigate the association from it's other end.
 	void populateReversedToOne(MappedTable& mt);
   
-  // Given an association (i.e: "many-to-many" link table, even n-ary with n>2),
-  // populates MappedTables matching the ends of the association with member-specification
-  // used to navigate that association from either of its class-ends.
-  // Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships.
-  // 		     "association" param is assumed to be one of them (i.e: table made only of 2 FKs) .
+    // Given an association (i.e: "many-to-many" link table, even n-ary with n>2),
+    // populates MappedTables matching the ends of the association with member-specification
+    // used to navigate that association from either of its class-ends.
+    // Pre-cond: All tables have been mapped to respective classes, some of them representing "many-to-many" relationships.
+    // 		     "association" parameter is assumed to be one of them (i.e: table made only of 2 FKs) .
 	void populateManyToMany(MappedTable& relation);
   
-	// Analyzes all mapped tables to produce any accessors for "ONE_TO_MANY" and "MANY_TO_MANY" associations.
-  void populateRelationships();
+    // Analyzes all mapped tables to produce any accessors for "ONE_TO_MANY" and "MANY_TO_MANY" associations.
+    void populateRelationships();
 
 	friend class Parser;
 	Parser *parser;
